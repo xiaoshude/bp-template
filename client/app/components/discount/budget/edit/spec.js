@@ -1,0 +1,53 @@
+import EditbudgetModule from './spec.js'
+import EditbudgetController from './controller.js';
+import EditbudgetComponent from './component.js';
+import EditbudgetTemplate from './template.html';
+
+describe('Editbudget', () => {
+  let $rootScope, makeController;
+
+  beforeEach(window.module(EditbudgetModule.name));
+  beforeEach(inject((_$rootScope_) => {
+    $rootScope = _$rootScope_;
+    makeController = () => {
+      return new EditbudgetController();
+    };
+  }));
+
+  describe('Module', () => {
+    // top-level specs: i.e., routes, injection, naming
+  });
+
+  describe('Controller', () => {
+    // controller specs
+    it('has a name property [REMOVE]', () => { // erase if removing this.name from the controller
+      let controller = makeController();
+      expect(controller).to.have.property('name');
+    });
+  });
+
+  describe('Template', () => {
+    // template specs
+    // tip: use regex to ensure correct bindings are used e.g., {{  }}
+    it('has name in template [REMOVE]', () => {
+      expect(EditbudgetTemplate).to.match(/{{\s?vm\.name\s?}}/g);
+    });
+  });
+
+  describe('Component', () => {
+      // component/directive specs
+      let component = EditbudgetComponent;
+
+      it('includes the intended template',() => {
+        expect(component.template).to.equal(EditbudgetTemplate);
+      });
+
+      it('uses `controllerAs` syntax', () => {
+        expect(component).to.have.property('controllerAs');
+      });
+
+      it('invokes the right controller', () => {
+        expect(component.controller).to.equal(EditbudgetController);
+      });
+  });
+});

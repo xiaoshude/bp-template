@@ -1,0 +1,275 @@
+<div class="row">
+  <div class="col-xs-2 text-right">
+    <label for="">活动类型:</label>
+  </div>
+  <div class="col-xs-10">
+    支付优惠
+  </div>
+</div>
+<fieldset ng-disabled="vm.detailMode">
+  <form class="form-horizontal"
+        novalidate name="ruleForm"
+        ng-submit="vm.updateRole(ruleForm)">
+    <div class="row" style="margin: 10px 0">
+      <fieldset ng-disabled="lastPartIsDisable">
+        <div class="col-xs-2 text-right">
+          <label><span class="require-star">*</span>开启白名单:</label>
+        </div>
+        <div class="col-xs-10">
+          <label style="margin-right: 10px"><input name="isWhiteListLimitation" ng-model="vm.info.isWhiteListLimitation"
+                                                   type="radio" value="1"/> 是 </label>
+          <label><input name="isWhiteListLimitation" ng-model="vm.info.isWhiteListLimitation" type="radio" value="0"/> 否
+          </label>
+        </div>
+      </fieldset>
+    </div>
+    <div class="row row-custom">
+      <div class="col-xs-2 text-right">
+        <label>
+          <span class="require-star">*</span>
+          <span>优惠规则:</span>
+        </label>
+      </div>
+      <div class="col-xs-10 form-inline">
+        <fieldset ng-disabled="selectIsDisable">
+          <select class="form-control"
+                  ng-init="vm.info.ruleType = '0';"
+                  ng-click="vm.info.ruleType == '0' ? vm.info.isSectionLimit=true : '' "
+                  ng-model="vm.info.ruleType">
+            <option value="0">满减</option>
+            <option value="1">随机减</option>
+          </select>
+        </fieldset>
+        <fieldset ng-disabled="editRuleIsDisable">
+          <div ng-if="vm.info.ruleType == 0">
+            <div ng-init="vm.info.deductRanges.length?'':vm.info.deductRanges=[{}]">
+              <ng-form name="deductRangesForm">
+                <div ng-repeat="deductRange in vm.info.deductRanges"
+                     style="margin-top: 20px">
+                  满 <input class="form-control"
+                           ng-model="deductRange.greaterThan"
+                           style="width: 130px"
+                           required
+                           type="text"/>
+                  — 减 <input class="form-control"
+                             ng-model="deductRange.minus"
+                             style="width: 130px"
+                             required
+                             type="text"/>
+                  <button class="btn bp-btn-primary"
+                          ng-if="$last"
+                          type="button"
+                          ng-click="vm.info.deductRanges.push({})">添加
+                  </button>
+                  <button class="btn bp-btn-primary"
+                          type="button"
+                          ng-click="vm.info.deductRanges.pop()"
+                          ng-if="$last && !$first">删除
+                  </button>
+                </div>
+              </ng-form>
+            </div>
+            <!--<div ng-if="vm.info.isWhiteListLimitation == 0">
+              支付时，必减 <input style="width: 80px" class="form-control" type="text"/> 元，当订单金额低于10元，默认支付0.01元。
+            </div>-->
+          </div>
+        </fieldset>
+        <div ng-if="vm.info.ruleType == 1">
+          <fieldset ng-disabled="editRuleIsDisable">
+            <div>
+              订单金额限制：<label><input ng-model="vm.info.isGreaterThanLimit"
+                                   type="checkbox"/>限制</label>
+                                    <span ng-if="vm.info.isGreaterThanLimit">
+                                        <input class="form-control"
+                                               ng-model="vm.info.greaterThan"
+                                               min="0.02"
+                                               type="number"/>元
+                                    </span>
+            </div>
+            <div>
+              减免范围：最小值 <input class="form-control"
+                              ng-model="vm.info.minValue"
+                              required
+                              min="0.01"
+                              ng-pattern="/^[0-9]\d*(\.\d{1,2})?$/"
+                              name="minValue"
+                              max="10000"
+                              type="number"/> 元
+              -最大值 <input class="form-control"
+                          required
+                          min="0.02"
+                          ng-pattern="/^[0-9]\d*(\.\d{1,2})?$/"
+                          max="10000"
+                          name="minus"
+                          ng-model="vm.info.minus"
+                          type="number"/> 元
+            </div>
+          </fieldset>
+          <fieldset ng-disabled="editRuleIsDisable">
+            <div>
+              <div>
+                波段限制：<label ng-click="vm.info.isSectionLimit?'':vm.info.sectionLimitations=[{}]"><input
+                ng-model="vm.info.isSectionLimit" type="checkbox"/>限制</label>
+              </div>
+              <div>
+                算法选择：
+                <label style="margin-right: 15px"><input ng-model="vm.info.algorithmSelected"
+                                                         value="0"
+                                                         type="radio"/>普通</label>
+                <label><input ng-model="vm.info.algorithmSelected"
+                              value="1"
+                              type="radio"/>智能（参照订单金额选取波段）</label>
+              </div>
+              <div ng-if="vm.info.isSectionLimit"
+                   ng-init="vm.info.sectionLimitations.length?'':vm.info.sectionLimitations=[{}]">
+                <ng-form name="sectionLimitationsForm">
+                  <div ng-repeat="sectionLimitation in vm.info.sectionLimitations"
+                       style="margin-bottom: 10px">
+                    最小值 <input class="form-control"
+
+                               ng-model="sectionLimitation.minValue"
+                               ng-pattern="/^[0-9]\d*(\.\d{1,2})?$/"
+                               style="width: 130px"
+                               required
+                               type="number"/>
+                    — 最大值 <input class="form-control"
+                                 ng-model="sectionLimitation.maxValue"
+                                 ng-pattern="/^[0-9]\d*(\.\d{1,2})?$/"
+                                 style="width: 130px"
+                                 required
+                                 type="number"/>
+                                            <span style="margin-left: 20px">
+                                                概率 <input class="form-control"
+                                                          ng-model="sectionLimitation.probability"
+                                                          ng-pattern="/^[0-9]\d*(\.\d{1,2})?$/"
+                                                          style="width: 130px;"
+                                                          type="number"/> %
+                                            </span>
+                    <button class="btn bp-btn-primary"
+                            ng-if="$last"
+                            type="button"
+                            ng-click="vm.info.sectionLimitations.push({})">添加
+                    </button>
+                    <button class="btn bp-btn-primary"
+                            type="button"
+                            ng-click="vm.info.sectionLimitations.pop()"
+                            ng-if="$last && !$first">删除
+                    </button>
+                  </div>
+                </ng-form>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+        <div class="discount-help-block"
+             ng-show="(ruleForm.minus.$dirty) && (ruleForm.minus.$error.pattern)">
+          <i class="fa fa-info-circle"></i>最多精确到小数点后两位，且必填
+        </div>
+      </div>
+
+      <div class="discount-help-block" ng-show="vm.info.greaterThan > 10000"><i
+        class="fa fa-info-circle"></i>优惠金额（首单满的钱数）不能大于10000
+      </div>
+      <div class="discount-help-block"
+           ng-show="ruleForm.minValue.$dirty && (vm.info.minValue >= vm.info.minus)"><i
+        class="fa fa-info-circle"></i>随机减的最小值小于最大值
+      </div>
+    </div>
+    <hr/>
+    <fieldset ng-disabled="targetUserIsDisable">
+      <div class="row row-custom">
+        <div class="col-xs-2 text-right">
+          <label><span class="require-star">*</span>目标用户：</label>
+        </div>
+        <div class="col-xs-10" ng-init="vm.info.targetUser = 0">
+          <label>
+            <input type="radio" ng-model="vm.info.targetUser" value="0">
+            全部用户（不限制是否为首单）
+          </label><br/>
+          <label>
+            <input type="radio" ng-model="vm.info.targetUser" value="1">
+            首单用户—活动期内首次卡支付的用户
+          </label><br/>
+          <label>
+            <input type="radio" ng-model="vm.info.targetUser" value="2">
+            首单用户—活动期内首次绑卡用卡支付的用户(历史上未绑定过银行卡)
+          </label><br/>
+          <label>
+            <input type="radio" ng-model="vm.info.targetUser" value="3">
+            已支付过用户—使用过一次及以上飞凡快捷支付并完成支付动作的用户
+          </label><br/>
+          <label>
+            <input type="radio" ng-model="vm.info.targetUser" value="4">
+            未支付过用户—未使用过飞凡快捷支付的用户
+          </label>
+        </div>
+      </div>
+    </fieldset>
+    <hr/>
+    <fieldset ng-disabled="lastPartIsDisable">
+      <div class="row row-custom form-inline" ng-if="vm.info.targetUser == '0' || vm.info.targetUser == '3'">
+        <div class="col-xs-2 text-right">
+          <label>单用户限量规则：</label>
+        </div>
+        <div class="col-xs-10">
+          <div>
+            <label><input ng-model="vm.info.isSingleUserDailyLimit"
+                          type="checkbox"/>每日限量</label>
+                                <span ng-if="vm.info.isSingleUserDailyLimit">
+                                    <input class="form-control"
+                                           ng-pattern="/^[1-9]\d*$/"
+                                           name="singleUserDailyLimitation"
+                                           bp-field-error='{"pattern":"每日限量必须为整数"}'
+                                           bp-field-error-selector="#singleUserDailyLimitationError"
+                                           ng-model="vm.info.singleUserDailyLimitation"
+                                           type="number"/> 单
+                                </span>
+          </div>
+          <div>
+            <label> <input ng-model="vm.info.isSingleUserTotalLimit"
+                           type="checkbox"/>活动期限量</label>
+                                <span ng-if="vm.info.isSingleUserTotalLimit">
+                                    <input class="form-control"
+                                           ng-pattern="/^[1-9]\d*$/"
+                                           name="singleUserTotalLimitation"
+                                           bp-field-error='{"pattern":"活动期限量必须为整数"}'
+                                           bp-field-error-selector="#singleUserTotalLimitationError"
+                                           ng-model="vm.info.singleUserTotalLimitation"
+                                           type="number"/> 单
+                                </span>
+          </div>
+          <div id="singleUserDailyLimitationError"></div>
+          <div id="singleUserTotalLimitationError"></div>
+        </div>
+      </div>
+      <hr/>
+      <div class="row row-custom form-inline">
+        <div class="col-xs-2 text-right">
+          <label><span class="require-star">*</span>优惠资格限制：</label>
+        </div>
+        <div class="col-xs-10">
+          活动期内，允许 <input class="form-control"
+                         min="1"
+                         max="9"
+                         required
+                         ng-pattern="/^[1-9]\d*$/"
+                         bp-field-error='{"max":"最大值为9","min":"最小值的1","pattern":"必须为整数"}'
+                         bp-field-error-selector="#ddIdToUidError"
+                         ng-model="vm.info.ddIdToUid"
+                         type="number"/> 个用户（uid）/同一设备
+        </div>
+        <div id="ddIdToUidError" style="margin-left: 167px">
+
+        </div>
+      </div>
+    </fieldset>
+    <div class="col-xs-8 col-xs-offset-2">
+      <button type="submit" class="btn bp-btn-primary"
+              ng-disabled="ruleForm.$submitting || ruleForm.$invalid || (vm.info.ruleType ==1 && (vm.info.minValue >= vm.info.minus))"
+              ng-switch="ruleForm.$submitting ">
+        <span ng-switch-default>保存,下一步</span>
+        <span ng-switch-when="true">保存中...</span>
+      </button>
+    </div>
+  </form>
+</fieldset>

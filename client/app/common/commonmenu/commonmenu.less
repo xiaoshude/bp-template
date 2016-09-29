@@ -1,0 +1,143 @@
+@tree-node-level1-height: 50px;
+.menu-height(@height){
+	height: @height;
+	line-height: @height;
+}
+.transition(@time:.3s, @fn:ease-in-out){
+	-webkit-transition: all @time @fn;
+  -o-transition: all @time @fn;
+  transition: all @time @fn;
+}
+.menu-container{
+	width: 233px;
+	height: 100%;
+	background-color: #1b1b29;
+	color: #90909a;
+	overflow-y: auto;
+	.transition();
+}
+.menu-container.menu-state-close{
+	width: 62px;
+}
+.angular-ui-tree{
+	position: absolute;
+  top: 60px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  overflow-y: auto;
+}
+.angular-ui-tree-nodes{
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	.angular-ui-tree-node{
+		list-style: none;
+		.angular-ui-tree-handle{
+			.menu-height(40px);
+			font-size: 14px;
+			padding-left: 85px;
+			padding-right: 20px;
+			white-space: nowrap;
+    	overflow: hidden;
+    	&:hover{
+    		background-color: rgba(255, 255, 255, .2);
+    	}
+			.menu-icon, .menu-text, .menu-arrow{
+				display: inline-block;
+				vertical-align: top;
+			}
+			.menu-icon{
+				opacity: .6;
+			}
+			.menu-arrow{
+				float: right;
+				background: none;
+				border: none;
+				.glyphicon-chevron-right{
+					color: #707070;
+				}
+				.glyphicon-chevron-down{
+					color: #FFFFFF;
+				}
+			}
+		}
+		.angular-ui-tree-handle.level0{
+			padding: 0 20px;
+			.menu-height(@tree-node-level1-height);
+			font-size: 16px;
+			.menu-icon{
+				width: 22px;
+				.menu-height(@tree-node-level1-height);
+				background: center center no-repeat;
+			}
+			.menu-text{
+				padding-left: 14px;
+			}
+		} 
+		.angular-ui-tree-handle.level1{
+			padding-left: 57px;
+			padding-right: 20px;
+		} 
+		.angular-ui-tree-handle.level2{
+			padding-left: 70px;
+			padding-right: 20px;
+		} 
+		.angular-ui-tree-nodes{
+			
+			height: 100%;
+			overflow: hidden;
+			&.menu-nodes-hide{
+				height: 0;
+			}
+		}
+
+	}
+	
+	.angular-ui-tree-node.nocollapsed{
+		background-color: #2d2d3b;
+		&.level2{
+			background-color: rgba(255, 255, 255, 0);
+		}
+		&.menu-has-nodes.level1{
+			background-color: rgba(255, 255, 255, 0.1);
+		}
+		>.angular-ui-tree-handle{
+			.menu-icon{
+				opacity: 1;
+			}
+			.menu-text{
+				color: #FFF;
+			}
+		}
+	} 
+}
+.close-wrap{
+	.menu-height(60px);
+	position: relative;
+  text-align: center;
+	.close-icon, .close-line{
+		display: inline-block;
+		vertical-align: top;
+	}
+	.close-line{
+		width: 100%;
+    height: 1px;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    z-index: -1;
+		background-color: rgba(144, 144, 154, .2);
+	}
+	.close-icon{
+		.menu-height(60px);
+		.transition();
+		width: 50px;
+		background: #1b1b29 center center no-repeat;
+	}
+}
+.menu-state-close{
+	.close-icon{
+		transform: rotate(180deg);
+	}
+}

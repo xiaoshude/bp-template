@@ -1,0 +1,59 @@
+<header>
+  <div class="bp-logo">
+    <img ng-src="{{ vm.image }}" />
+  </div>
+  <div class="bp-header-input">
+    <div class="dropdown">
+      <div class="dropdown-toggle bp-header-input-area" data-toggle="dropdown" aria-expanded="true" ng-model="headertitle">
+        {{ headertitle }}
+        <span class="glyphicon glyphicon-chevron-down bp-header-input-area-btn" aria-hidden="true"></span>
+      </div>
+      <ul class="dropdown-menu" role="menu">
+        <i class="menu-arrow-top"></i>
+        <li role="presentation">
+          <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+          <input type="text" id="toggle_mall_input" ng-model="greeting" placeholder="请输入要搜索的广场"/>
+        </li>
+        <li role="presentation" class="divider"></li>
+        <li role="presentation" class="search-title">飞凡平台</li>
+        
+        <li class="search-box">
+          <div ng-repeat="searchItem in vm.searchData">
+              <a role="menuitem" tabindex="-1" href="#" ng-click="choiseValue(searchItem.name);">{{ searchItem.name }}</a>  
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="bp-user-container">
+    <div class="bp-user-btn">
+      <div class="bp-user-btn-logo bp-user-btn-logo-people"></div>
+      <div class="bp-user-btn-info-area">
+        <div class="bp-user-btn-title">{{ vm.userName }}</div>
+        <div class="bp-user-btn-details">{{ vm.groupName }}</div>
+      </div>
+      <ul class="dropdown-menu" role="menu">
+        <i class="menu-arrow-top"></i>
+        <li class="bp-menu-item" role="presentation"><a role="menuitem" tabindex="-1">修改密码</a></li>
+        <li role="presentation" class="divider"></li>
+        <li class="bp-menu-item" role="presentation"><a role="menuitem" tabindex="-1">退出</a></li>
+      </ul>
+    </div>
+    <div class="bp-user-btn">
+      <i class="bp-user-btn-logo bp-user-btn-logo-login"></i>
+      <div class="bp-user-btn-info-area">
+        <div class="bp-user-btn-title">最近登录</div>
+        <div class="bp-user-btn-details">一小时前</div>
+      </div>
+      <ul class="dropdown-menu dropdown-menu-small" role="menu">
+        <i class="menu-arrow-top"></i>
+        <div ng-repeat="loginInfo in vm.last5LoginIp">
+          <li class="bp-menu-item bp-menu-item-small" role="presentation">
+            <span class="bp-menu-item-time">{{ loginInfo.login_time }}</span><span class="bp-menu-item-ip">{{ loginInfo.login_ip }}</span>
+          </li>
+          <li role="presentation" class="divider"></li>
+        </div>
+      </ul>
+    </div>
+  </div>
+</header>

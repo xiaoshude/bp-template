@@ -1,0 +1,60 @@
+<div class="modal-header">
+  <span class="modal-title">批量导入</span>
+  <div class="modal-close" ng-click="vm.cancel()">X</div>
+</div>
+<div class="modal-body">
+  <form name="myForm" novalidate>
+    <div class="row">
+      <div class="col-xs-3 col-xs-offset-1">
+        <label class="file-input-wrapper btn btn-sm bp-btn-primary">
+          <input type="file" ngf-select ng-model="vm.file" name="file" required />
+        </label>
+      </div>
+      <div class="col-xs-4">
+        <a target="_blank" ng-href="{{vm.data.tpl}}">下载示例模板</a>
+      </div>
+      <div class="col-xs-4">
+        <button ng-disabled="!myForm.$valid"
+                class="btn bp-btn-primary"
+                ng-click="vm.uploadFile(vm.file)">执行</button>
+      </div>
+    </div>
+    <div ng-show="myForm.file.$valid" class="row">
+      <div class="col-xs-offset-1 col-xs-11">
+        <span>
+        {{vm.file.name}}
+      </span>
+        <button ng-click="vm.file = null"
+                class="btn bp-btn-default btn-sm"
+                ng-show="vm.file">删除</button>
+      </div>
+    </div>
+
+    <div ng-if="vm.startImport">
+      <div>
+        <span ng-if="vm.importing"><i class="fa fa-spinner" aria-hidden="true"></i>正在导入中...</span>
+        <span ng-if="!vm.importing"><i class="fa fa-check" aria-hidden="true"></i>导入完成</span>
+      </div>
+      <table class="table table-condensed table-bordered table-striped table-hover">
+        <tr>
+          <td>成功导入</td>
+          <td>已存在</td>
+          <td>导入失败</td>
+          <td>总条数</td>
+        </tr>
+        <tr>
+          <td>{{vm.importResult.success}}</td>
+          <td>{{vm.importResult.existed}}</td>
+          <td>{{vm.importResult.failed}}</td>
+          <td>{{vm.importResult.total}}</td>
+        </tr>
+      </table>
+
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" ng-click="vm.cancel()" class="btn bp-btn-default">关闭</button>
+</div>
+
+

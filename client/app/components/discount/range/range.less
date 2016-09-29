@@ -1,0 +1,26 @@
+.range {
+  .control-label {
+    text-align: right;
+  }
+}
+.file-input-wrapper {
+  width: 50px;
+  height: 20px;
+  position: relative;
+  &:after{
+    content: '选择文件';
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 12px;
+  }
+  input[type="file"] {
+    width: 50px;
+    height: 20px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+  }
+}
+

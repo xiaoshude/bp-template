@@ -1,0 +1,30 @@
+<script type="text/ng-template" id="nodes_renderer.html">
+  <div ui-tree-handle ng-class="'level'+node.level" ng-click="vm.nodeClick(node)">
+
+    <span class='menu-icon' ng-style="{ 'background-image': 'url('+vm.menuDefault+')' }" ng-if="node.level===0"></span>
+    <span class='menu-text'>{{node.title}}</span>
+    <span class="menu-arrow" ng-if="node.nodes && node.nodes.length > 0" data-nodrag>
+      	<span class="glyphicon" ng-class="{
+          'glyphicon-chevron-right': collapsed,
+          'glyphicon-chevron-down': !collapsed
+        }"></span>
+    </span>
+  </div>
+  
+  <ul ui-tree-nodes="" ng-model="node.nodes" class='menu-items' ng-class="{'menu-nodes-hide': collapsed}">
+    <li ng-repeat="node in node.nodes" ui-tree-node ng-include="'nodes_renderer.html'"  data-collapsed="node.menuCollapsed" ng-class="'level'+node.level+' '+(collapsed?'collapsed':'nocollapsed')+' '+(node.nodes?' menu-has-nodes':'')">
+    </li>
+  </ul>
+</script>
+
+<div class="menu-container" ng-class="{'menu-state-close': vm.close}">
+	<div class='close-wrap'>
+    <span class='close-line'></span>
+    <span class='close-icon' ng-click='vm.closeMenu()' ng-style="{ 'background-image': 'url('+vm.closeMenuImg+')' }"></span>
+	</div>
+  <div ui-tree id="tree-root" data-drag-enabled='false'>
+    <ul ui-tree-nodes ng-model="vm.menus" class='menu-items'>
+      <li ng-repeat="node in vm.menus" ui-tree-node ng-include="'nodes_renderer.html'" data-collapsed="node.menuCollapsed" ng-class="'level'+node.level+' '+(collapsed?'collapsed':'nocollapsed')+' '+(node.nodes?' menu-has-nodes':'')"></li>
+    </ul>
+  </div>
+</div>

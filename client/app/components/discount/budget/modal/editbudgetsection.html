@@ -1,0 +1,33 @@
+<div class="modal-header">
+  <h3 class="modal-title">{{vm.title}}</h3>
+</div>
+<div class="modal-body">
+  <form name="budgetSection">
+    <div class="row" style="padding: 30px 10px">
+      <div class="col-xs-4">
+        <bp-datepicker model="vm.band.startAt" datepicker-options="vm.startDatepickerOption"></bp-datepicker>
+      </div>
+      <div class="col-xs-4">
+        <bp-datepicker model="vm.band.endAt" datepicker-options="vm.endDatepickerOption"></bp-datepicker>
+      </div>
+        <span class="col-xs-4 form-inline">
+            <input ng-model="vm.band.value"
+                   class="form-control"
+                   required
+                   type="number"/> 元/次
+        </span>
+    </div>
+  </form>
+  <div class="text-muted text-center">
+    活动开始时间：{{vm.oaInfo.startAt * 1000|date:'yyyy-MM-dd HH:mm:ss'}} <br>
+    活动结束时间：{{vm.oaInfo.endAt * 1000|date:'yyyy-MM-dd HH:mm:ss'}}
+  </div>
+</div>
+<div class="modal-footer">
+  <button class="btn bp-btn-primary"
+          type="button"
+          ng-disabled="budgetSection.$invalid"
+          ng-click="vm.ok()">保存
+  </button>
+  <button class="btn btn-warning" type="button" ng-click="vm.cancel()">取消</button>
+</div>

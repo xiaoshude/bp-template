@@ -1,0 +1,32 @@
+<div class="gs-modal-default">
+	<div class="gs-modal-header clearfix">
+		<a href="" class="close" title="关闭" ng-click="vm.close()"><i class="fa fa-times"></i></a>
+		<h4 class="gs-modal-title pull-left">增加广场</h4>
+	</div>
+	<form name="addForm" novalidate ng-submit="vm.addSubmit(addForm)">
+		<div class="col-xl-11">
+			<input type="text" ng-model="filters.name" placeholder="请输入广场名称">
+		</div>
+		<table class="table table-bordered" ng-table="tableParams">
+	      <thead>
+	        <tr>
+	          <th>全选<input type="checkbox" ng-model="vm.selectedAll" ng-click="vm.selectAll()"></th>
+	          <th>广场名称</th>
+	        </tr>
+	      </thead>
+	      <tbody>
+	        <tr ng-repeat="row in $data track by row.id">
+	          <th scope="row"><input type="checkbox" ng-model="row.selected" ng-disabled="row.status == 1" /></th>
+	          <td filter="{name: 'text'}" ng-disabled="row.status == 1">{{row.name}}</td>
+	        </tr>
+	       </tbody>
+	    </table>
+		<div class="modal-footer">
+			<button class="btn btn-default" type="button" ng-click="vm.close()">取消</button>
+			<button class="btn btn-success" type="submit" ng-switch="addForm.$submitting" ng-disabled="addForm.$submitting || addForm.$invalid">
+				<span ng-switch-default>保存</span>
+				<span ng-switch-when="true">保存中...</span>
+			</button>
+		</div>
+	</form>
+</div>

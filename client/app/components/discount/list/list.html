@@ -1,0 +1,157 @@
+<div class="page-title">
+  <div class="title">
+    <h1>活动列表</h1>
+  </div>
+</div>
+<div class="conter-wrapper">
+  <div class="panel bp-panel-primary">
+    <div class="panel-heading">
+      <div class="panel-title">查询条件</div>
+    </div>
+    <div class="panel-body">
+      <div novalidate>
+        <div class="form-group col-xs-4">
+          <label class="control-label">活动名称：</label>
+          <input type="text" class="form-control" ng-model="vm.filter.name" placeholder="请输入活动名称">
+        </div>
+        <div class="form-group col-xs-8">
+          <label class="control-label">活动开始时间：</label>
+          <bp-rangepicker ng-start-model="vm.filter.laterThan" ng-end-model="vm.filter.earlierThan"
+                          rangepicker-options="vm.datepickerOption"></bp-rangepicker>
+        </div>
+        <div class="form-group col-xs-4">
+          <label class="control-label">提交人：</label>
+          <input type="text" class="form-control" ng-model="vm.filter.createdBy" placeholder="提交人姓名">
+        </div>
+        <div class="form-group col-xs-4">
+          <label class="control-label">活动类型：</label>
+          <select ng-model="vm.filter.type" class="form-control">
+            <option value="">全部</option>
+            <option value=1>支付优惠</option>
+          </select>
+        </div>
+        <div class="form-group col-xs-4">
+          <label class="control-label">活动状态：</label>
+          <select ng-model="vm.filter.status" class="form-control">
+            <option value=''>全部</option>
+            <option value=0>已保存</option>
+            <option value=1>待审核</option>
+            <option value=2>已撤销</option>
+            <option value=3>已驳回</option>
+            <option value=4>已上线</option>
+            <option value=5>已下线</option>
+            <option value=6>已结束</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="panel-footer" style="text-align: center">
+      <button type="submit" ng-click="vm.searchList()" class="btn bp-btn-primary">查询</button>
+      <button type="reset" ng-click="vm.filter = {}" class="btn bp-btn-default">重置</button>
+    </div>
+  </div>
+  <div class="bp-container">
+    <span><a class="btn bp-btn-primary" ng-href="index.html#/discount/add">创建活动</a></span>
+  </div>
+  <div class="bp-container">
+    <div ng-show="vm.isEmptyForListData" class="list-empty-info">没有查询到数据</div>
+    <div ng-show="!vm.isEmptyForListData">
+      <table class="table table-condensed table-bordered table-striped table-hover table-discount-list"
+             ng-table="vm.tableParams">
+        <thead>
+        <tr>
+          <th>活动编号</th>
+          <th>活动名称</th>
+          <th>活动短标题</th>
+          <th>活动类型</th>
+          <th>开始时间</th>
+          <th>结束时间</th>
+          <th>活动状态</th>
+          <th>创建者</th>
+          <th>修改者</th>
+          <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="row in $data track by $index">
+          <td> {{row.code}}</td>
+          <td class="limit-word"> {{row.name|killAmp}}</td>
+          <td class="limit-word"> {{row.shortTitle|killAmp}}</td>
+          <td> {{row.typeName|killAmp}}</td>
+          <td> {{row.startAt * 1000 | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+          <td> {{row.endAt * 1000 | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+          <td> {{row.status | activityStatus}}</td>
+          <td> {{row.createdBy}}</td>
+          <td> {{row.updatedBy}}</td>
+          <td>
+            <a class="btn btn-xs bp-btn-primary"
+               ng-href="index.html#/discount/detail/{{row.id}}"
+               title="查看"
+               style="margin-bottom: 5px"
+               ng-show="row.hasDetailButton">查看</a>
+
+            <a class="btn btn-xs bp-btn-primary"
+               title="编辑"
+               ng-show="row.hasEditButton"
+               style="margin-bottom: 5px"
+               ng-href="index.html#/discount/edit/{{row.id}}">编辑</a>
+
+            <a class="btn btn-xs bp-btn-primary"
+               href="javascript:;"
+               title="提交"
+               ng-show="row.hasSubmitButton"
+               style="margin-bottom: 5px"
+               ng-click="vm.submitActivity(row.id)">提交</a>
+
+            <a class="btn btn-xs bp-btn-primary"
+               href="javascript:;"
+               title="同意"
+               ng-click="vm.agreeActivity(row.id)"
+               style="margin-bottom: 5px"
+               ng-show="row.hasAgreeButton">同意</a>
+
+            <a class="btn btn-xs bp-btn-primary"
+               href="javascript:;"
+               title="驳回"
+               ng-click="vm.rejectActivity(row.id)"
+               style="margin-bottom: 5px"
+               ng-show="row.hasRejectButton">驳回</a>
+
+            <!--<a resource="discount_check" href="javascript:;" title="状态"-->
+            <!--ng-if="row.status == 1" ng-click="vm.check(row.id)">审核</a>-->
+
+            <a class="btn btn-xs bp-btn-default"
+               href="javascript:;"
+               title="撤销"
+               ng-show="row.hasRepealButton"
+               style="margin-bottom: 5px"
+               ng-click="vm.repealActivity(row.id)">撤销</a>
+
+            <a class="btn btn-xs bp-btn-primary"
+               href="javascript:;"
+               title="上线"
+               ng-show="row.hasOnlineButton"
+               style="margin-bottom: 5px"
+               ng-click="vm.onlineActivity(row.id)">上线</a>
+
+            <a class="btn btn-xs bp-btn-default"
+               href="javascript:;"
+               title="下线"
+               ng-show="row.hasOffOnlineButton"
+               style="margin-bottom: 5px"
+               ng-click="vm.offlineActivity(row.id)">下线</a>
+
+            <a class="btn btn-xs bp-btn-primary"
+               href="javascript:;"
+               title="下线"
+               ng-show="row.hasRefreshConfigButton"
+               style="margin-bottom: 5px"
+               ng-click="vm.refreshConfig(row.id, row.flushAt)">上线时间配置</a>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <br>
+  </div>
+</div>

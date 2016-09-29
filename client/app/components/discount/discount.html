@@ -1,0 +1,22 @@
+<div class="page-title">
+  <div class="title">
+    <h1>支付优惠活动</h1>
+  </div>
+</div>
+<div class="conter-wrapper">
+  <div class="bp-container">
+    <span><a class="btn bp-btn-primary" ng-href="index.html#/discount/list">返回活动列表</a></span>
+  </div>
+  <div class="panel bp-panel-primary">
+    <div class="panel-heading">
+      <div class="panel-title">{{vm.title}}</div>
+    </div>
+    <div class="panel-body">
+      <ul class="nav nav-pills">
+        <li ng-repeat="item in vm.navArr" ui-sref-active="active"><a ui-sref="{{item.sref}}">{{item.name}}</a></li>
+      </ul>
+      <hr>
+      <div ui-view></div>
+    </div>
+  </div>
+</div>

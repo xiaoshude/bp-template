@@ -1,0 +1,17 @@
+<div class="modal-header">
+  <span class="modal-title">选择商户</span>
+
+  <div class="modal-close" ng-click="vm.cancel()">X</div>
+</div>
+<div class="modal-body" cg-busy="{promise:vm.loadPromise,message:'数据加载中'}">
+  <div class="panel-body">
+    <multi-select config="vm.config" ng-model="vm.multiSelectModel"></multi-select>
+  </div>
+</div>
+<div class="modal-footer">
+  <button ng-if="!vm.isDetailRange" type="button" ng-click="vm.ok()" class="btn bp-btn-primary">{{vm.btnPrimaryCon}}</button>
+  <button type="button" ng-click="vm.cancel()" class="btn bp-btn-default">取消</button>
+</div>
+
+
+

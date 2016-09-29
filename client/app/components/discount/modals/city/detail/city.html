@@ -1,0 +1,31 @@
+<div class="modal-header">
+  <span class="modal-title">已选择城市</span>
+
+  <div class="modal-close" ng-click="vm.cancel()">X</div>
+</div>
+<div class="modal-body" cg-busy="{promise:vm.loadPromise,message:'数据加载中'}">
+  <div class="panel-body">
+    <table class="table table-condensed table-bordered table-striped table-hover">
+      <thead>
+      <th>城市id</th>
+      <th>城市</th>
+      </thead>
+      <tbody>
+      <tr ng-repeat="item in vm.cities" ng-if="item.cityName">
+        <td>
+          {{item.cityId}}
+        </td>
+        <td>
+          {{item.cityName}}
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" ng-click="vm.cancel()" class="btn bp-btn-default">取消</button>
+</div>
+
+
+

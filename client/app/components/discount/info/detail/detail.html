@@ -1,0 +1,162 @@
+<div class="row" cg-busy="{promise:vm.cgPromise,message:'数据加载中,请稍后...'}">
+
+  <form class="form-horizontal" novalidate name="discountForm">
+    <fieldset ng-disabled="true">
+      <!-- 活动名称 -->
+      <div class="form-group">
+        <label class="col-xs-2 control-label"><span class="require-star">*</span>活动名称:</label>
+
+        <div class="col-xs-4">
+          <input type="text" name="name" class="form-control"
+                 value="{{vm.name|killAmp}}"
+            />
+        </div>
+      </div>
+      <!-- /活动名称 -->
+      <!-- 活动短标题 -->
+      <div class="form-group">
+        <label class="col-xs-2 control-label"><span class="require-star">*</span>活动规则短标题<br>
+          第一行(收银台展示)</label>
+
+        <div class="col-xs-4">
+          <input type="text" name="shortTitle" class="form-control"
+                 value="{{vm.shortTitle|killAmp}}"/>
+        </div>
+      </div>
+      <!-- /活动短标题 -->
+      <!-- 活动短标题第二行 -->
+      <div class="form-group">
+        <label class="col-xs-2 control-label">活动规则短标题<br>
+          第二行(收银台展示)：</label>
+
+        <div class="col-xs-4">
+          <input type="text" name="shortTitleBottom" class="form-control"
+                 value="{{vm.shortTitleBottom|killAmp}}"/>
+        </div>
+      </div>
+      <!-- /活动短标题第二行 -->
+
+
+      <!-- OA预算 -->
+      <div class="form-group">
+        <label class="col-xs-2 control-label"><span class="require-star">*</span>OA编号:</label>
+
+        <div class="col-xs-4">
+          <input type="text" name="name" class="form-control"
+                 ng-model="vm.oaNumber"/>
+        </div>
+      </div>
+      <!-- /OA预算 -->
+
+      <!-- 预算总金额 -->
+      <div class="form-group">
+        <label class="col-xs-2 control-label">OA总预算:</label>
+
+        <div class="col-xs-4">
+          <input type="text" class="form-control" value="{{vm.budget/100|number:2}}元" disabled>
+        </div>
+      </div>
+      <!-- /预算总金额 -->
+
+      <!-- 预算剩余 -->
+      <div class="form-group">
+        <label class="col-xs-2 control-label">OA预算剩余:</label>
+
+        <div class="col-xs-4">
+          <input type="text" class="form-control" value="{{vm.residualBudget/100|number:2}}元" disabled>
+        </div>
+      </div>
+      <!-- /预算剩余 -->
+
+      <!--OA开始时间 -->
+      <div class="form-group">
+        <label class="col-xs-2 control-label">
+          OA预算开始时间:
+        </label>
+
+        <div class="col-xs-4">
+          <input type="text" class="form-control" value="{{vm.oaBeginTime}}"/>
+        </div>
+      </div>
+      <!--/OA开始时间 -->
+
+      <!--OA结束时间 -->
+      <div class="form-group">
+        <label class="col-xs-2 control-label">
+          OA预算结束时间:
+        </label>
+
+        <div class="col-xs-4">
+          <input type="text" class="form-control" value="{{vm.oaEndTime}}"/>
+        </div>
+      </div>
+      <!--/OA结束时间 -->
+
+      <!-- 活动类型 -->
+      <div class="form-group">
+        <label class="col-xs-2 control-label">活动类型:</label>
+
+        <div class="col-xs-4">
+          <input type="text" class="form-control" value="{{vm.typeName}}"/>
+        </div>
+      </div>
+      <!-- /活动类型 -->
+
+      <!--活动标签 -->
+      <div class="form-group">
+        <label class="col-xs-2 control-label">活动标签:</label>
+
+        <div class="col-xs-4">
+          <input type="text" name="tag" class="form-control" value="{{vm.tag|killAmp}}"/>
+        </div>
+      </div>
+      <!-- /活动标签 -->
+
+      <!--开始时间 -->
+      <div class="form-group">
+        <label class="col-xs-2 control-label">
+          <span class="require-star">*</span>开始时间:
+        </label>
+
+        <div class="col-xs-4">
+          <input type="text" class="form-control" value="{{vm.startAt | date:'yyyy-MM-dd HH:mm:ss'}}"/>
+        </div>
+      </div>
+      <!--/开始时间 -->
+
+      <!-- 结束时间 -->
+      <div class="form-group">
+        <label class="col-xs-2 control-label">
+          <span class="require-star">*</span>结束时间:
+        </label>
+
+        <div class="col-xs-4">
+          <input type="text" class="form-control" value="{{vm.endTime | date:'yyyy-MM-dd HH:mm:ss'}}"/>
+        </div>
+      </div>
+      <!-- /结束时间 -->
+
+      <!-- 活动说明 -->
+      <div class="form-group">
+        <label class="col-xs-2 control-label">活动说明:</label>
+
+        <div class="col-xs-4">
+          <div id="activity-edit" class="ueditor" name="description" config="vm.addInfo.config"
+               ng-model="vm.description"></div>
+        </div>
+      </div>
+      <!-- /活动说明 -->
+
+      <!-- 活动规则 -->
+      <div class="form-group">
+        <label class="col-xs-2 control-label">活动规则:</label>
+
+        <div class="col-xs-4">
+
+          <textarea name="ruleDescription" cols="30" rows="10" class="form-control input-sm">{{vm.ruleDescription|killAmp}}</textarea>
+        </div>
+      </div>
+      <!-- /活动规则 -->
+    </fieldset>
+  </form>
+</div>

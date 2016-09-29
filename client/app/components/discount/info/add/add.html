@@ -1,0 +1,230 @@
+<div class="row">
+  <form class="form-horizontal" novalidate name="discountForm" ng-submit="vm.addActivity(discountForm)">
+    <!-- 活动名称 -->
+    <div class="form-group">
+      <label class="col-xs-2 control-label"><span class="require-star">*</span>活动名称:</label>
+
+      <div class="col-xs-4">
+        <input type="text" name="name" class="form-control" placeholder="请输入长度2-50的字符"
+               ng-minlength="2"
+               ng-maxlength="50"
+               ng-model="vm.addInfo.name"
+               required/>
+      </div>
+      <div ng-show="(vm.addInfo.name).length>2 && (vm.addInfo.name).length<50">
+        <span>{{(vm.addInfo.name).length}}/50</span>
+      </div>
+      <div ng-messages="discountForm.name.$error"
+           ng-show="(discountForm.$submitted || discountForm.name.$dirty) && discountForm.name.$invalid">
+        <p class="discount-help-block" ng-message="minlength || maxlength">
+          <i class="fa fa-info-circle"></i> 请输入长度2-50的字符
+        </p>
+      </div>
+    </div>
+    <!-- /活动名称 -->
+
+    <!-- 活动短标题 -->
+    <div class="form-group">
+      <label class="col-xs-2 control-label"><span class="require-star">*</span>活动规则短标题<br>
+        第一行(收银台展示)</label>
+
+      <div class="col-xs-4">
+        <input type="text" name="shortTitle" class="form-control" placeholder="请输入长度2-11的字符"
+               ng-minlength="2"
+               maxlength="11"
+               ng-model="vm.addInfo.shortTitle"
+               required/>
+      </div>
+      <div ng-messages="discountForm.shortTitle.$error"
+           ng-show="(discountForm.$submitted || discountForm.shortTitle.$dirty) && discountForm.shortTitle.$invalid">
+        <p class="discount-help-block" ng-message="minlength || maxlength">
+          <i class="fa fa-info-circle"></i> 请输入长度2-11的字符
+        </p>
+      </div>
+    </div>
+    <!-- /活动短标题 -->
+    <!-- 活动短标题第二行 -->
+    <div class="form-group">
+      <label class="col-xs-2 control-label">活动规则短标题<br>
+        第二行(收银台展示)：</label>
+
+      <div class="col-xs-4">
+        <input type="text" name="shortTitleBottom" class="form-control" placeholder="请输入长度2-20的字符"
+               ng-minlength="2"
+               maxlength="20"
+               ng-model="vm.addInfo.shortTitleBottom"/>
+      </div>
+      <div ng-messages="discountForm.shortTitleBottom.$error"
+           ng-show="(discountForm.$submitted || discountForm.shortTitleBottom.$dirty) && discountForm.shortTitleBottom.$invalid">
+        <p class="discount-help-block" ng-message="minlength || maxlength">
+          <i class="fa fa-info-circle"></i> 请输入长度2-20的字符
+        </p>
+      </div>
+    </div>
+    <!-- /活动短标题第二行 -->
+
+    <!-- OA预算 -->
+    <div class="form-group">
+      <label class="col-xs-2 control-label"><span class="require-star">*</span>OA编号:</label>
+
+      <div class="col-xs-4">
+        <ui-select ng-model="vm.currentBudget"
+                   theme="bootstrap">
+          <ui-select-match placeholder="请选择OA编号">
+            <span ng-bind="$select.selected.oaNumber"></span>
+          </ui-select-match>
+          <ui-select-choices repeat="item in (vm.budgetList | filter: $select.search)">
+            <span ng-bind="item.oaNumber"></span>
+          </ui-select-choices>
+        </ui-select>
+      </div>
+      <div>
+        <span class="require-star">温馨提示：预算一旦创建不可修改</span>
+      </div>
+    </div>
+    <!-- /OA预算 -->
+
+    <!-- 预算总金额 -->
+    <div class="form-group">
+      <label class="col-xs-2 control-label">OA总预算:</label>
+
+      <div class="col-xs-4">
+        <input type="text" class="form-control" value="{{vm.currentBudget.budget/100|number:2}}元" disabled>
+      </div>
+    </div>
+    <!-- /预算总金额 -->
+
+    <!-- 预算剩余 -->
+    <div class="form-group">
+      <label class="col-xs-2 control-label">OA预算剩余:</label>
+
+      <div class="col-xs-4">
+        <input type="text" class="form-control" value="{{vm.currentBudget.residualBudget/100|number:2}}元" disabled>
+      </div>
+    </div>
+    <!-- /预算剩余 -->
+
+    <!-- OA开始时间 -->
+    <div class="form-group">
+      <label class="col-xs-2 control-label">OA预算开始时间：:</label>
+
+      <div class="col-xs-4">
+        <input type="text" class="form-control" value="{{vm.currentBudget.beginTime}}" disabled>
+      </div>
+    </div>
+    <!-- /OA开始时间 -->
+
+    <!-- OA结束时间 -->
+    <div class="form-group">
+      <label class="col-xs-2 control-label">OA预算结束时间:</label>
+
+      <div class="col-xs-4">
+        <input type="text" class="form-control" value="{{vm.currentBudget.endTime}}" disabled>
+      </div>
+    </div>
+    <!-- /OA结束时间 -->
+
+    <!-- 活动类型 -->
+    <div class="form-group">
+      <label class="col-xs-2 control-label">活动类型:</label>
+
+      <div class="col-xs-4">
+        <ui-select ng-model="vm.currentType" ng-disabled=true
+                   theme="bootstrap">
+          <ui-select-match placeholder="全部商户">
+            <span ng-bind="$select.selected.name"></span>
+          </ui-select-match>
+          <ui-select-choices repeat="item in (vm.typeList | filter: $select.search) track by item.id">
+            <span ng-bind="item.name"></span>
+          </ui-select-choices>
+        </ui-select>
+      </div>
+    </div>
+    <!-- /活动类型 -->
+
+    <!--活动标签 -->
+    <div class="form-group">
+      <label class="col-xs-2 control-label">活动标签:</label>
+
+      <div class="col-xs-4">
+        <input type="text" name="tag" class="form-control" placeholder="请输入长度2-50的字符"
+               ng-model="vm.addInfo.tag"
+               ng-minlength="2"
+               ng-maxlength="50"
+          />
+      </div>
+      <div ng-messages="discountForm.tag.$error"
+           ng-show="(discountForm.$submitted || discountForm.tag.$dirty) && discountForm.tag.$invalid">
+        <p class="discount-help-block" ng-message="minlength || maxlength">
+          <i class="fa fa-info-circle"></i> 请输入长度2-50的字符
+        </p>
+      </div>
+    </div>
+    <!-- /活动标签 -->
+
+    <!--开始时间 -->
+    <div class="form-group">
+      <label class="col-xs-2 control-label">
+        <span class="require-star">*</span>开始时间:
+      </label>
+
+      <div class="col-xs-4">
+        <bp-datepicker model="vm.datetime.begin" datepicker-options="vm.datepickerOption"></bp-datepicker>
+      </div>
+    </div>
+    <!--/开始时间 -->
+
+    <!-- 结束时间 -->
+    <div class="form-group">
+      <label class="col-xs-2 control-label">
+        <span class="require-star">*</span>结束时间:
+      </label>
+
+      <div class="col-xs-4">
+        <bp-datepicker model="vm.datetime.end" datepicker-options="vm.datepickerOption"></bp-datepicker>
+      </div>
+    </div>
+    <!-- /结束时间 -->
+
+    <!-- 活动说明 -->
+    <div class="form-group">
+      <label class="col-xs-2 control-label">活动说明:</label>
+
+      <div class="col-xs-4">
+        <div class="ueditor" name="description" config="vm.addInfo.config" ng-model="vm.addInfo.description"></div>
+      </div>
+    </div>
+    <!-- /活动说明 -->
+
+    <!-- 活动规则 -->
+    <div class="form-group">
+      <label class="col-xs-2 control-label">活动规则:</label>
+
+      <div class="col-xs-4">
+        <textarea maxlength=500 name="ruleDescription" ng-model="vm.addInfo.ruleDescription" cols="30" rows="10"
+                  class="form-control input-sm"></textarea>
+      </div>
+      <div ng-messages="discountForm.ruleDescription.$error"
+           ng-show="(discountForm.$submitted || discountForm.ruleDescription.$dirty) && discountForm.ruleDescription.$invalid">
+        <p class="discount-help-block" ng-message="maxlength">
+          <i class="fa fa-info-circle"></i> 字符不能大于500
+        </p>
+      </div>
+      <div ng-show="(vm.addInfo.ruleDescription).length>0 && (vm.addInfo.ruleDescription).length<500">
+        <span>{{(vm.addInfo.ruleDescription).length}}/500</span>
+      </div>
+    </div>
+    <!-- /活动规则 -->
+
+    <div class="col-xs-8 col-xs-offset-2">
+      <button type="submit" class="btn bp-btn-primary"
+              ng-disabled="discountForm.$submitting || discountForm.$invalid || !vm.addInfo.budget"
+              ng-switch="discountForm.$submitting">
+        <span ng-switch-default>保存,下一步</span>
+        <span ng-switch-when="true">保存中...</span>
+      </button>
+    </div>
+
+  </form>
+</div>
+

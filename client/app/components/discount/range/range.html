@@ -1,0 +1,222 @@
+<div class="range">
+  <fieldset ng-disabled="vm.rangeDetail || vm.status == 1 || vm.status == 5 || vm.status == 6">
+    <div class="row">
+      <div class="form-group">
+        <label class="col-sm-2 control-label">
+          活动范围限定：
+        </label>
+
+        <div class="col-sm-8">
+          <label><input type="checkbox"
+                        ng-model="vm.noLimit"
+                        ng-click="vm.noLimit ? vm.restrict={} : ''"/>
+            全平台 <span class="text-muted small">(不做活动范围限制，所有业务均参加活动)</span></label>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group">
+        <label class="col-sm-2 control-label">
+          业态范围：<br/><span class="text-muted small">（门店类型，以基础数据为准）</span>
+        </label>
+
+        <div class="col-sm-8">
+          <label><input
+            ng-model="vm.restrict.isBusinessTypeLimit"
+            ng-true-value="1"
+            ng-false-value="0"
+            type="checkbox"/> 限定并选择业态</label>
+
+          <div ng-if="vm.restrict.isBusinessTypeLimit">
+            <label ng-repeat="type in vm.businessTypeList"
+                   style="margin-right: 10px">
+              <input type="checkbox" checklist-model="vm.form.businesstypelimitationList" checklist-value="type.code">
+              {{type.name}}
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--<div class="row">
+      <div class="form-group">
+        <label class="col-sm-2 control-label">
+          类目范围：
+        </label>
+
+        <div class="col-sm-8">
+          <label><input
+            ng-model="vm.restrict.isCategoryLimit"
+            ng-true-value="1"
+            ng-false-value="0"
+            type="checkbox"/> 限定并选择类目</label>
+
+          <div ng-if="vm.restrict.isCategoryLimit">
+            <label ng-repeat="type in vm.categoryList"
+                   style="margin-right: 10px">
+              <input type="checkbox" checklist-model="vm.form.categorylimitationList"
+                     checklist-value="type.categoryId"> {{type.categoryName}}
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>-->
+  </fieldset>
+  <div class="row">
+    <div class="form-group">
+      <label class="col-sm-2 control-label">
+        城市范围：
+      </label>
+
+      <div class="col-sm-8">
+        <label><input
+          ng-model="vm.restrict.isCityLimit"
+          ng-true-value="1"
+          ng-false-value="0"
+          ng-disabled="vm.rangeDetail || vm.status == 1 || vm.status == 5 || vm.status == 6"
+          type="checkbox"/> 限定并选择城市</label>
+
+        <div ng-if="vm.restrict.isCityLimit">
+          <button ng-disabled="vm.rangeDetail || vm.status == 1 || vm.status == 5 || vm.status == 6" class="btn btn-sm bp-btn-primary" ng-click="vm.selectCity()">选择</button>
+          <button class="btn btn-sm bp-btn-primary" ng-click="vm.detailCity()">查看</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group">
+      <label class="col-sm-2 control-label">
+        商圈范围：<br/><span class="text-muted small">（购物中心，商超，百货，电器城，以基础数据为准）</span>
+      </label>
+
+      <div class="col-sm-8">
+        <label><input
+          ng-model="vm.restrict.isPlazaLimit"
+          ng-true-value="1"
+          ng-false-value="0"
+          ng-disabled="vm.rangeDetail || vm.status == 1 || vm.status == 5 || vm.status == 6"
+          type="checkbox"/> 限定并选择商圈</label>
+
+        <div ng-if="vm.restrict.isPlazaLimit">
+          <button ng-disabled="vm.rangeDetail || vm.status == 1 || vm.status == 5 || vm.status == 6" class="btn btn-sm bp-btn-primary" ng-click="vm.selectPlaza('lg')">选择
+          </button>
+          <button class="btn btn-sm bp-btn-primary" ng-click="vm.delPlaza('lg')"><span
+            ng-if="!vm.rangeDetail || vm.status == 1 || vm.status == 5 || vm.status == 6">编辑</span><span ng-if="vm.rangeDetail || vm.status == 1 || vm.status == 5 || vm.status == 6">查看</span></button>
+          <button ng-disabled="vm.rangeDetail || vm.status == 1 || vm.status == 5 || vm.status == 6"
+                  class="btn btn-sm bp-btn-primary"
+                  ng-click="vm.popImportModal(vm.importUrls.plaza, vm.importTplUrls.plaza)">批量导入
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--<div class="row">
+    <div class="form-group">
+      <label class="col-sm-2 control-label">
+        品牌范围：
+      </label>
+
+      <div class="col-sm-8">
+        <label><input
+          ng-model="vm.restrict.isBrandLimit"
+          ng-true-value="1"
+          ng-false-value="0"
+          type="checkbox"/> 限定并选择品牌</label>
+
+        <div ng-if="vm.restrict.isBrandLimit">
+          <button ng-disabled="vm.rangeDetail || vm.status == 1 || vm.status == 5 || vm.status == 6" class="btn btn-sm bp-btn-primary" ng-click="vm.selectBrand('lg')">选择
+          </button>
+          <button class="btn btn-sm bp-btn-primary" ng-click="vm.delBrand('lg')"><span
+            ng-if="!vm.rangeDetail || vm.status == 1 || vm.status == 5 || vm.status == 6">编辑</span><span ng-if="vm.rangeDetail || vm.status == 1 || vm.status == 5 || vm.status == 6">查看</span></button>
+          <button ng-disabled="vm.rangeDetail || vm.status == 1 || vm.status == 5 || vm.status == 6"
+                  class="btn btn-sm bp-btn-primary"
+                  ng-click="vm.popImportModal(vm.importUrls.brand, vm.importTplUrls.brand)">批量导入
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>-->
+  <!--<div class="row">
+    <div class="form-group">
+      <label class="col-sm-2 control-label">
+        品牌商范围：
+      </label>
+
+      <div class="col-sm-8">
+        <label><input
+          ng-model="vm.restrict.isBrandMerchantLimit"
+          ng-true-value="1"
+          ng-false-value="0"
+          type="checkbox"/> 限定并选择品牌商</label>
+
+        <div ng-if="vm.restrict.isBrandMerchantLimit">
+          <button ng-disabled="vm.rangeDetail || vm.status == 1 || vm.status == 5 || vm.status == 6" class="btn btn-sm bp-btn-primary"
+                  ng-click="vm.selectBrandMerchant('lg')">选择
+          </button>
+          <button class="btn btn-sm bp-btn-primary" ng-click="vm.delBrandMerchant('lg')"><span
+            ng-if="!vm.rangeDetail || vm.status == 1 || vm.status == 5 || vm.status == 6">编辑</span><span ng-if="vm.rangeDetail || vm.status == 1 || vm.status == 5 || vm.status == 6">查看</span></button>
+          <button ng-disabled="vm.rangeDetail || vm.status == 1 || vm.status == 5 || vm.status == 6"
+                  class="btn btn-sm bp-btn-primary"
+                  ng-click="vm.popImportModal(vm.importUrls.brandMerchant, vm.importTplUrls.brandMerchant)">批量导入
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>-->
+  <div class="row">
+    <div class="form-group">
+      <label class="col-sm-2 control-label">
+        商户范围：<br/><span class="text-muted small">（法人主体，以基础数据为准）</span>
+      </label>
+
+      <div class="col-sm-8">
+        <label><input
+          ng-model="vm.restrict.isMerchantLimit"
+          ng-true-value="1"
+          ng-false-value="0"
+          ng-disabled="vm.rangeDetail || vm.status == 1 || vm.status == 5 || vm.status == 6"
+          type="checkbox"/> 限定并选择商户</label>
+
+        <div ng-if="vm.restrict.isMerchantLimit">
+          <button ng-disabled="vm.rangeDetail || vm.status == 1 || vm.status == 5 || vm.status == 6" class="btn btn-sm bp-btn-primary" ng-click="vm.selectMerchant('lg')">选择
+          </button>
+          <button class="btn btn-sm bp-btn-primary" ng-click="vm.delMerchant('lg')"><span
+            ng-if="!vm.rangeDetail || vm.status == 1 || vm.status == 5 || vm.status == 6">编辑</span><span ng-if="vm.rangeDetail || vm.status == 1 || vm.status == 5 || vm.status == 6">查看</span></button>
+          <button ng-disabled="vm.rangeDetail || vm.status == 1 || vm.status == 5 || vm.status == 6"
+                  class="btn btn-sm bp-btn-primary"
+                  ng-click="vm.popImportModal(vm.importUrls.merchant, vm.importTplUrls.merchant)">批量导入
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group">
+      <label class="col-sm-2 control-label">
+        门店范围：<br/><span class="text-muted small">（经营实体，以基础数据为准）</span>
+      </label>
+
+      <div class="col-sm-8">
+        <label><input
+          ng-model="vm.restrict.isStoreLimit"
+          ng-true-value="1"
+          ng-false-value="0"
+          ng-disabled="vm.rangeDetail || vm.status == 1 || vm.status == 5 || vm.status == 6"
+          type="checkbox"/> 限定并选择门店</label>
+
+        <div ng-if="vm.restrict.isStoreLimit">
+          <button ng-disabled="vm.rangeDetail || vm.status == 1 || vm.status == 5 || vm.status == 6" class="btn btn-sm bp-btn-primary" ng-click="vm.selectStore('lg')">选择
+          </button>
+          <button class="btn btn-sm bp-btn-primary" ng-click="vm.delStore('lg')"><span
+            ng-if="!vm.rangeDetail || vm.status == 1 || vm.status == 5 || vm.status == 6">编辑</span><span ng-if="vm.rangeDetail || vm.status == 1 || vm.status == 5 || vm.status == 6">查看</span></button>
+          <button ng-disabled="vm.rangeDetail || vm.status == 1 || vm.status == 5 || vm.status == 6"
+                  class="btn btn-sm bp-btn-primary"
+                  ng-click="vm.popImportModal(vm.importUrls.store, vm.importTplUrls.store)">批量导入
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="text-center row">
+    <button ng-if="!vm.rangeDetail || vm.status == 1 || vm.status == 5 || vm.status == 6" class="btn bp-btn-primary" ng-click="vm.save()">保存，下一步</button>
+  </div>
+</div>
