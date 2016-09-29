@@ -1,6 +1,6 @@
-import template from './<%= name %>.html';
-import controller from './<%= name %>.controller';
-import './<%= name %>.less';
+import template from './template.html';
+import controller from './controller';
+import './style.less';
 
 let <%= name %>Component = {
   restrict: 'E',

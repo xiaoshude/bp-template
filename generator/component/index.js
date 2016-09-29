@@ -1,4 +1,4 @@
-import <%= name %>Component from './<%= name %>.component';
+import <%= name %>Component from './component';
 
 let <%= name %>Module = angular.module('<%= name %>', [
 ])
