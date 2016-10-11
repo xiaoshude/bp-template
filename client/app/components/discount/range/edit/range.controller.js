@@ -36,6 +36,7 @@ class RangeController {
 
     this.form = {};
     this.restrict = {};
+    this.reverseRestrict = {};
     this.activityId = $state.params.id;
 
     //type(1=>品牌商户,2=>品牌,3=>门店,4=>商圈,5=>商户,6=>白名单,7＝》灰名单)
@@ -134,7 +135,7 @@ class RangeController {
     ]
   }
 
-  selectCity(size) {
+  selectCity(size, selectionFlag) {
     let activityId = this.activityId;
     var modalInstance = this.$uibModal.open({
       animation: true,
@@ -145,13 +146,16 @@ class RangeController {
       resolve: {
         citylimitationList: () => {
           //获取城市限制列表
-          return this.Api.get('activity/citylimitationList', {activityId}).then(responce => {
+          return this.Api.get('activity/citylimitationList', {activityId, selectionFlag}).then(responce => {
             this.citylimitationList = responce;
             this.citylimitationList.forEach(item => {
               item.categoryId = item.cityId;
             });
             return this.citylimitationList;
           });
+        },
+        selectionFlag: () => {
+          return selectionFlag;
         }
       }
     });
@@ -164,7 +168,7 @@ class RangeController {
     });
   }
 
-  detailCity(size) {
+  detailCity(size, selectionFlag) {
     let activityId = this.activityId;
     var modalInstance = this.$uibModal.open({
       animation: true,
@@ -175,7 +179,7 @@ class RangeController {
       resolve: {
         citylimitationList: () => {
           //获取城市限制列表
-          return this.Api.get('activity/citylimitationList', {activityId}).then(responce => {
+          return this.Api.get('activity/citylimitationList', {activityId, selectionFlag}).then(responce => {
             this.citylimitationList = responce;
             this.citylimitationList.forEach(item => {
               item.categoryId = item.regionId || item.provinceId || item.cityId;
@@ -194,7 +198,7 @@ class RangeController {
     });
   }
 
-  selectPlaza(size) {
+  selectPlaza(size, selectionFlag) {
     var modalInstance = this.$uibModal.open({
       animation: true,
       template: plazaTemplate,
@@ -204,6 +208,9 @@ class RangeController {
       resolve: {
         plazalimitationList: () => {
           return [];
+        },
+        selectionFlag: () => {
+          return selectionFlag;
         }
       }
     });
@@ -216,7 +223,7 @@ class RangeController {
     });
   }
 
-  delPlaza(size) {
+  delPlaza(size, selectionFlag) {
     var modalInstance = this.$uibModal.open({
       animation: true,
       template: plazaTemplate,
@@ -229,6 +236,9 @@ class RangeController {
         },
         rangeDetail: () => {
           return false;
+        },
+        selectionFlag: () => {
+          return selectionFlag;
         }
       }
     });
@@ -279,7 +289,7 @@ class RangeController {
     });
   }
 
-  selectBrandMerchant(size) {
+  selectBrandMerchant(size, selectionFlag) {
     var modalInstance = this.$uibModal.open({
       animation: true,
       template: brandmerchantTemplate,
@@ -287,6 +297,9 @@ class RangeController {
       controllerAs: 'vm',
       size: size,
       resolve: {
+        selectionFlag: () => {
+          return selectionFlag;
+        }
       }
     });
 
@@ -298,7 +311,7 @@ class RangeController {
     });
   }
 
-  delBrandMerchant(size) {
+  delBrandMerchant(size, selectionFlag) {
     var modalInstance = this.$uibModal.open({
       animation: true,
       template: brandmerchantTemplate,
@@ -306,6 +319,9 @@ class RangeController {
       controllerAs: 'vm',
       size: size,
       resolve: {
+        selectionFlag: () => {
+          return selectionFlag;
+        }
       }
     });
 
@@ -317,7 +333,7 @@ class RangeController {
     });
   }
 
-  popImportModal(url, tpl) {
+  popImportModal(url, tpl, selectionFlag) {
     let data = {
       type: url,
       tpl: tpl
@@ -329,7 +345,10 @@ class RangeController {
       controllerAs: 'vm',
       size: 'md',
       resolve: {
-        data: data
+        data: () => data,
+        selectionFlag: () => {
+          return selectionFlag;
+        }
       }
     });
 
@@ -338,7 +357,7 @@ class RangeController {
     });
   }
 
-  selectMerchant(size) {
+  selectMerchant(size, selectionFlag) {
     var modalInstance = this.$uibModal.open({
       animation: true,
       template: merchantTemplate,
@@ -348,6 +367,9 @@ class RangeController {
       resolve: {
         merchantlimitationList: () => {
           return [];
+        },
+        selectionFlag: () => {
+          return selectionFlag;
         }
       }
     });
@@ -360,7 +382,7 @@ class RangeController {
     });
   }
 
-  delMerchant(size) {
+  delMerchant(size, selectionFlag) {
     var modalInstance = this.$uibModal.open({
       animation: true,
       template: merchantTemplate,
@@ -370,6 +392,9 @@ class RangeController {
       resolve: {
         merchantlimitationList: () => {
           return [];
+        },
+        selectionFlag: () => {
+          return selectionFlag;
         }
       }
     });
@@ -382,7 +407,7 @@ class RangeController {
     });
   }
 
-  selectStore(size) {
+  selectStore(size, selectionFlag) {
     var modalInstance = this.$uibModal.open({
       animation: true,
       template: storeTemplate,
@@ -392,6 +417,9 @@ class RangeController {
       resolve: {
         storelimitationList: () => {
           return [];
+        },
+        selectionFlag: () => {
+          return selectionFlag;
         }
       }
     });
@@ -404,7 +432,7 @@ class RangeController {
     });
   }
 
-  delStore(size) {
+  delStore(size, selectionFlag) {
     var modalInstance = this.$uibModal.open({
       animation: true,
       template: storeTemplate,
@@ -417,6 +445,9 @@ class RangeController {
         },
         rangeDetail: () => {
           return false;
+        },
+        selectionFlag: () => {
+          return selectionFlag;
         }
       }
     });
@@ -442,6 +473,17 @@ class RangeController {
 
     //获取各级活动范围是否限制列表
     this.Api.get('activity/scopelimitationList', {activityId}).then(responce => {
+      this.reverseRestrict.isCityReverseLimit = responce.isCityReverseLimit;
+      delete responce.isCityReverseLimit;
+      this.reverseRestrict.isPlazaReverseLimit = responce.isPlazaReverseLimit;
+      delete responce.isPlazaReverseLimit;
+      this.reverseRestrict.isBrandMerchantReverseLimit = responce.isBrandMerchantReverseLimit;
+      delete responce.isBrandMerchantReverseLimit;
+      this.reverseRestrict.isMerchantReverseLimit = responce.isMerchantReverseLimit;
+      delete responce.isMerchantReverseLimit;
+      this.reverseRestrict.isStoreReverseLimit = responce.isStoreReverseLimit;
+      delete responce.isStoreReverseLimit;
+
       this.restrict = responce;
       if (this.restrict.isBusinessTypeLimit == 0 &&
         this.restrict.isCategoryLimit == 0 &&
@@ -460,7 +502,7 @@ class RangeController {
         this.form.businesstypelimitationList.push('' + item.businessTypeId)
       });
     });
-    //获取类目限制列表
+    /*//获取类目限制列表
     this.Api.get('activity/categorylimitationList', {activityId}).then(responce => {
       this.form.categorylimitationList = [];
       responce.forEach(item => {
@@ -494,7 +536,7 @@ class RangeController {
       responce.forEach(item => {
         this.storelimitationList.push(item.storeId);
       });
-    });
+    });*/
   }
 
   save() {
@@ -567,9 +609,9 @@ class RangeController {
 
     var updateActivity = () => {
       //更新活动范围限制
-      let scopePromise = this.Api.post('activity/updateScopelimitation', Object.assign({}, this.restrict, {activityId}));
+      let scopePromise = this.Api.post('activity/updateScopelimitation', Object.assign({}, this.restrict, this.reverseRestrict, {activityId}));
       scopePromise.then(responce => {
-        this.restrict = responce;
+        //this.restrict = responce;
       });
 
       //更新业态范围

@@ -1,5 +1,5 @@
 class Controller {
-  constructor($uibModalInstance, $http, Api, $state, data, Upload) {
+  constructor($uibModalInstance, $http, Api, $state, data, Upload, selectionFlag) {
     'ngInject'
     this.$uibModalInstance = $uibModalInstance;
     this.Api = Api;
@@ -11,17 +11,18 @@ class Controller {
 
     this.activityId = this.$state.params.id;
     this.uploadFile = function (file) {
-      this._uploadFile(file, data.type)
+      this._uploadFile(file, data.type, selectionFlag)
     }
   }
 
-  _uploadFile(file, type) {
+  _uploadFile(file, type, selectionFlag) {
     file.upload = this.Upload.upload({
       url: this.url,
       data: {
         file: file,
         activityId: this.activityId,
-        type: type
+        selectionFlag,
+        type
       }
     });
 

@@ -1,9 +1,11 @@
 class CityController {
-  constructor($uibModalInstance, Api, $http, citylimitationList, $state) {
+  constructor($uibModalInstance, Api, $http, citylimitationList, $state, selectionFlag) {
     'ngInject'
     this.$uibModalInstance = $uibModalInstance;
     this.Api = Api;
     this.$state = $state;
+    this.selectionFlag = selectionFlag;
+
     this.loadPromise = $http.get('/Database/coupon_component/selectCity');
     this.config = {
       //指示子节点的字段名
@@ -20,13 +22,15 @@ class CityController {
 
   ok() {
     let activityId = this.$state.params.id;
+    let selectionFlag = this.selectionFlag;
     let ids = this.parseData(this.form.cities);
     if(!ids.length){
       alert('未选择任何城市');
       return;
     }
     this.Api.post('activity/updateCitylimitation', {
-      activityId: activityId,
+      activityId,
+      selectionFlag,
       limitations: ids
     }).then(responce => {
       this.$uibModalInstance.close('ok');

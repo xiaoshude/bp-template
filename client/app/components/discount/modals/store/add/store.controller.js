@@ -1,9 +1,11 @@
 class StoreController {
-  constructor($uibModalInstance, $http, Api, $state, storelimitationList) {
+  constructor($uibModalInstance, $http, Api, $state, storelimitationList, selectionFlag) {
     'ngInject'
     this.$uibModalInstance = $uibModalInstance;
     this.Api = Api;
     this.$state = $state;
+    this.selectionFlag = selectionFlag;
+
     let activityId = this.$state.params.id;
 
     this.btnPrimaryCon = '添加';
@@ -154,8 +156,10 @@ class StoreController {
 
   ok() {
     let activityId = this.$state.params.id;
+    let selectionFlag = this.selectionFlag;
     this.Api.post('activity/addStorelimitation', {
-      activityId: activityId,
+      activityId,
+      selectionFlag,
       limitations: this.multiSelectModel
     }).then(r => {
       this.$uibModalInstance.close('ok');

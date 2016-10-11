@@ -1,9 +1,11 @@
 class StoreController {
-  constructor($uibModalInstance, $http, Api, $state, storelimitationList) {
+  constructor($uibModalInstance, $http, Api, $state, storelimitationList, selectionFlag) {
     'ngInject'
     this.$uibModalInstance = $uibModalInstance;
     this.Api = Api;
     this.$state = $state;
+    this.selectionFlag = selectionFlag;
+
     this.isDetailRange = this.$state.current.name == 'discount.detailrange' || this.$state.params.isDetailLike;
     this.btnPrimaryCon = '删除';
 
@@ -12,7 +14,7 @@ class StoreController {
     this.loadPromise = $http.get('/kickoff/activity/storelimitationList?activityId=' + activityId);
     this.config = {
       //拉取数据的url
-      url: '/kickoff/activity/storelimitationList?activityId=' + activityId,
+      url: `/kickoff/activity/storelimitationList?activityId=${activityId}&selectionFlag=${selectionFlag}`,
 
       //标识每个选项的字段
       uniqueField: 'id',
@@ -66,8 +68,10 @@ class StoreController {
 
   ok() {
     let activityId = this.$state.params.id;
+    let selectionFlag = this.selectionFlag;
     this.Api.post('activity/delStorelimitation', {
-      activityId: activityId,
+      activityId,
+      selectionFlag,
       ids: this.multiSelectModel
     }).then(r => {
       this.$uibModalInstance.close('ok');

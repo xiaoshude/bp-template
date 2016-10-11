@@ -21,11 +21,11 @@
         </label>
 
         <div class="col-sm-8">
+          <label style="margin-right:10px"><input ng-model="vm.restrict.isBusinessTypeLimit" type="radio" ng-value="0"/> 不限定</label>
           <label><input
             ng-model="vm.restrict.isBusinessTypeLimit"
-            ng-true-value="1"
-            ng-false-value="0"
-            type="checkbox"/> 限定并选择业态</label>
+            ng-value="1"
+            type="radio"/> 正向限定业态</label>
 
           <div ng-if="vm.restrict.isBusinessTypeLimit">
             <label ng-repeat="type in vm.businessTypeList"
@@ -68,16 +68,27 @@
       </label>
 
       <div class="col-sm-8">
-        <label><input
+        <label style="margin-right: 10px"><input
           ng-model="vm.restrict.isCityLimit"
           ng-true-value="1"
           ng-false-value="0"
           ng-disabled="vm.rangeDetail || vm.status == 1 || vm.status == 5 || vm.status == 6"
-          type="checkbox"/> 限定并选择城市</label>
+          type="checkbox"/> 正向限定城市</label>
+        <label><input ng-model="vm.reverseRestrict.isCityReverseLimit"
+                                                 ng-true-value="1"
+                                                 ng-false-value="0"
+                                                 ng-disabled="vm.rangeDetail || vm.status == 1 || vm.status == 5 || vm.status == 6"
+                                                 type="checkbox"/> 反向限定城市</label>
+        <div>
+          <span ng-if="vm.restrict.isCityLimit">
+          <button ng-disabled="vm.rangeDetail || vm.status == 1 || vm.status == 5 || vm.status == 6" class="btn btn-sm bp-btn-primary" ng-click="vm.selectCity('md', 1)">正向选择</button>
+          <button class="btn btn-sm bp-btn-primary" ng-click="vm.detailCity('md', 1)">正向查看</button>
+        </span>
 
-        <div ng-if="vm.restrict.isCityLimit">
-          <button ng-disabled="vm.rangeDetail || vm.status == 1 || vm.status == 5 || vm.status == 6" class="btn btn-sm bp-btn-primary" ng-click="vm.selectCity()">选择</button>
-          <button class="btn btn-sm bp-btn-primary" ng-click="vm.detailCity()">查看</button>
+          <sapn ng-if="vm.reverseRestrict.isCityReverseLimit">
+            <button ng-disabled="vm.rangeDetail || vm.status == 1 || vm.status == 5 || vm.status == 6" class="btn btn-sm bp-btn-primary" ng-click="vm.selectCity('md', 2)">反向选择</button>
+            <button class="btn btn-sm bp-btn-primary" ng-click="vm.detailCity('md', 2)">反向查看</button>
+          </sapn>
         </div>
       </div>
     </div>
@@ -89,22 +100,41 @@
       </label>
 
       <div class="col-sm-8">
-        <label><input
+        <label style="margin-right: 10px"><input
           ng-model="vm.restrict.isPlazaLimit"
           ng-true-value="1"
           ng-false-value="0"
           ng-disabled="vm.rangeDetail || vm.status == 1 || vm.status == 5 || vm.status == 6"
-          type="checkbox"/> 限定并选择商圈</label>
+          type="checkbox"/> 正向限定商圈</label>
 
-        <div ng-if="vm.restrict.isPlazaLimit">
-          <button ng-disabled="vm.rangeDetail || vm.status == 1 || vm.status == 5 || vm.status == 6" class="btn btn-sm bp-btn-primary" ng-click="vm.selectPlaza('lg')">选择
+        <label><input
+          ng-model="vm.reverseRestrict.isPlazaReverseLimit"
+          ng-true-value="1"
+          ng-false-value="0"
+          ng-disabled="vm.rangeDetail || vm.status == 1 || vm.status == 5 || vm.status == 6"
+          type="checkbox"/> 反向限定商圈</label>
+
+        <div>
+          <span ng-if="vm.restrict.isPlazaLimit">
+          <button ng-disabled="vm.rangeDetail || vm.status == 1 || vm.status == 5 || vm.status == 6" class="btn btn-sm bp-btn-primary" ng-click="vm.selectPlaza('lg', 1)">正向选择
           </button>
-          <button class="btn btn-sm bp-btn-primary" ng-click="vm.delPlaza('lg')"><span
-            ng-if="!vm.rangeDetail || vm.status == 1 || vm.status == 5 || vm.status == 6">编辑</span><span ng-if="vm.rangeDetail || vm.status == 1 || vm.status == 5 || vm.status == 6">查看</span></button>
+          <button class="btn btn-sm bp-btn-primary" ng-click="vm.delPlaza('lg', 1)"><span
+            ng-if="!vm.rangeDetail || vm.status == 1 || vm.status == 5 || vm.status == 6">正向编辑</span><span ng-if="vm.rangeDetail || vm.status == 1 || vm.status == 5 || vm.status == 6">正向查看</span></button>
           <button ng-disabled="vm.rangeDetail || vm.status == 1 || vm.status == 5 || vm.status == 6"
                   class="btn btn-sm bp-btn-primary"
-                  ng-click="vm.popImportModal(vm.importUrls.plaza, vm.importTplUrls.plaza)">批量导入
+                  ng-click="vm.popImportModal(vm.importUrls.plaza, vm.importTplUrls.plaza, 1)">批量导入
           </button>
+        </span>
+        <span ng-if="vm.reverseRestrict.isPlazaReverseLimit">
+          <button ng-disabled="vm.rangeDetail || vm.status == 1 || vm.status == 5 || vm.status == 6" class="btn btn-sm bp-btn-primary" ng-click="vm.selectPlaza('lg', 2)">反向选择
+          </button>
+          <button class="btn btn-sm bp-btn-primary" ng-click="vm.delPlaza('lg', 2)"><span
+            ng-if="!vm.rangeDetail || vm.status == 1 || vm.status == 5 || vm.status == 6">反向编辑</span><span ng-if="vm.rangeDetail || vm.status == 1 || vm.status == 5 || vm.status == 6">反向查看</span></button>
+          <button ng-disabled="vm.rangeDetail || vm.status == 1 || vm.status == 5 || vm.status == 6"
+                  class="btn btn-sm bp-btn-primary"
+                  ng-click="vm.popImportModal(vm.importUrls.plaza, vm.importTplUrls.plaza, 2)">批量导入
+          </button>
+        </span>
         </div>
       </div>
     </div>
@@ -135,33 +165,52 @@
       </div>
     </div>
   </div>-->
-  <!--<div class="row">
+  <div class="row">
     <div class="form-group">
       <label class="col-sm-2 control-label">
-        品牌商范围：
+        品牌商范围：<br/><span class="text-muted small">（经营一个或多个品牌的主体，以基础数据为准）</span>
       </label>
 
       <div class="col-sm-8">
-        <label><input
+        <label style="margin-right:10px;"><input
           ng-model="vm.restrict.isBrandMerchantLimit"
           ng-true-value="1"
           ng-false-value="0"
-          type="checkbox"/> 限定并选择品牌商</label>
+          type="checkbox"/> 正向限定品牌商</label>
+        <label><input
+          ng-model="vm.reverseRestrict.isBrandMerchantReverseLimit"
+          ng-true-value="1"
+          ng-false-value="0"
+          type="checkbox"/> 反向限定品牌商</label>
 
-        <div ng-if="vm.restrict.isBrandMerchantLimit">
-          <button ng-disabled="vm.rangeDetail || vm.status == 1 || vm.status == 5 || vm.status == 6" class="btn btn-sm bp-btn-primary"
-                  ng-click="vm.selectBrandMerchant('lg')">选择
-          </button>
-          <button class="btn btn-sm bp-btn-primary" ng-click="vm.delBrandMerchant('lg')"><span
-            ng-if="!vm.rangeDetail || vm.status == 1 || vm.status == 5 || vm.status == 6">编辑</span><span ng-if="vm.rangeDetail || vm.status == 1 || vm.status == 5 || vm.status == 6">查看</span></button>
-          <button ng-disabled="vm.rangeDetail || vm.status == 1 || vm.status == 5 || vm.status == 6"
-                  class="btn btn-sm bp-btn-primary"
-                  ng-click="vm.popImportModal(vm.importUrls.brandMerchant, vm.importTplUrls.brandMerchant)">批量导入
-          </button>
+        <div>
+          <span ng-if="vm.restrict.isBrandMerchantLimit">
+            <button ng-disabled="vm.rangeDetail || vm.status == 1 || vm.status == 5 || vm.status == 6" class="btn btn-sm bp-btn-primary"
+                    ng-click="vm.selectBrandMerchant('lg', 1)">正向选择
+            </button>
+            <button class="btn btn-sm bp-btn-primary" ng-click="vm.delBrandMerchant('lg', 1)"><span
+              ng-if="!vm.rangeDetail || vm.status == 1 || vm.status == 5 || vm.status == 6">正向编辑</span><span ng-if="vm.rangeDetail || vm.status == 1 || vm.status == 5 || vm.status == 6">正向查看</span></button>
+            <button ng-disabled="vm.rangeDetail || vm.status == 1 || vm.status == 5 || vm.status == 6"
+                    class="btn btn-sm bp-btn-primary"
+                    ng-click="vm.popImportModal(vm.importUrls.brandMerchant, vm.importTplUrls.brandMerchant, 1)">批量导入
+            </button>
+          </span>
+
+          <span ng-if="vm.reverseRestrict.isBrandMerchantReverseLimit">
+            <button ng-disabled="vm.rangeDetail || vm.status == 1 || vm.status == 5 || vm.status == 6" class="btn btn-sm bp-btn-primary"
+                    ng-click="vm.selectBrandMerchant('lg', 2)">反向选择
+            </button>
+            <button class="btn btn-sm bp-btn-primary" ng-click="vm.delBrandMerchant('lg', 2)"><span
+              ng-if="!vm.rangeDetail || vm.status == 1 || vm.status == 5 || vm.status == 6">反向编辑</span><span ng-if="vm.rangeDetail || vm.status == 1 || vm.status == 5 || vm.status == 6">反向查看</span></button>
+            <button ng-disabled="vm.rangeDetail || vm.status == 1 || vm.status == 5 || vm.status == 6"
+                    class="btn btn-sm bp-btn-primary"
+                    ng-click="vm.popImportModal(vm.importUrls.brandMerchant, vm.importTplUrls.brandMerchant, 2)">批量导入
+            </button>
+          </span>
         </div>
       </div>
     </div>
-  </div>-->
+  </div>
   <div class="row">
     <div class="form-group">
       <label class="col-sm-2 control-label">
@@ -169,22 +218,41 @@
       </label>
 
       <div class="col-sm-8">
-        <label><input
+        <label style="margin-right: 10px"><input
           ng-model="vm.restrict.isMerchantLimit"
           ng-true-value="1"
           ng-false-value="0"
           ng-disabled="vm.rangeDetail || vm.status == 1 || vm.status == 5 || vm.status == 6"
-          type="checkbox"/> 限定并选择商户</label>
+          type="checkbox"/> 正向限定商户</label>
 
-        <div ng-if="vm.restrict.isMerchantLimit">
-          <button ng-disabled="vm.rangeDetail || vm.status == 1 || vm.status == 5 || vm.status == 6" class="btn btn-sm bp-btn-primary" ng-click="vm.selectMerchant('lg')">选择
-          </button>
-          <button class="btn btn-sm bp-btn-primary" ng-click="vm.delMerchant('lg')"><span
-            ng-if="!vm.rangeDetail || vm.status == 1 || vm.status == 5 || vm.status == 6">编辑</span><span ng-if="vm.rangeDetail || vm.status == 1 || vm.status == 5 || vm.status == 6">查看</span></button>
-          <button ng-disabled="vm.rangeDetail || vm.status == 1 || vm.status == 5 || vm.status == 6"
-                  class="btn btn-sm bp-btn-primary"
-                  ng-click="vm.popImportModal(vm.importUrls.merchant, vm.importTplUrls.merchant)">批量导入
-          </button>
+        <label><input
+          ng-model="vm.reverseRestrict.isMerchantReverseLimit"
+          ng-true-value="1"
+          ng-false-value="0"
+          ng-disabled="vm.rangeDetail || vm.status == 1 || vm.status == 5 || vm.status == 6"
+          type="checkbox"/> 反向限定商户</label>
+
+        <div>
+          <span ng-if="vm.restrict.isMerchantLimit">
+            <button ng-disabled="vm.rangeDetail || vm.status == 1 || vm.status == 5 || vm.status == 6" class="btn btn-sm bp-btn-primary" ng-click="vm.selectMerchant('lg', 1)">正向选择
+            </button>
+            <button class="btn btn-sm bp-btn-primary" ng-click="vm.delMerchant('lg', 1)"><span
+              ng-if="!vm.rangeDetail || vm.status == 1 || vm.status == 5 || vm.status == 6">正向编辑</span><span ng-if="vm.rangeDetail || vm.status == 1 || vm.status == 5 || vm.status == 6">正向查看</span></button>
+            <button ng-disabled="vm.rangeDetail || vm.status == 1 || vm.status == 5 || vm.status == 6"
+                    class="btn btn-sm bp-btn-primary"
+                    ng-click="vm.popImportModal(vm.importUrls.merchant, vm.importTplUrls.merchant, 1)">批量导入
+            </button>
+          </span>
+          <span ng-if="vm.reverseRestrict.isMerchantReverseLimit">
+            <button ng-disabled="vm.rangeDetail || vm.status == 1 || vm.status == 5 || vm.status == 6" class="btn btn-sm bp-btn-primary" ng-click="vm.selectMerchant('lg', 2)">反向选择
+            </button>
+            <button class="btn btn-sm bp-btn-primary" ng-click="vm.delMerchant('lg', 2)"><span
+              ng-if="!vm.rangeDetail || vm.status == 1 || vm.status == 5 || vm.status == 6">反向编辑</span><span ng-if="vm.rangeDetail || vm.status == 1 || vm.status == 5 || vm.status == 6">反向查看</span></button>
+            <button ng-disabled="vm.rangeDetail || vm.status == 1 || vm.status == 5 || vm.status == 6"
+                    class="btn btn-sm bp-btn-primary"
+                    ng-click="vm.popImportModal(vm.importUrls.merchant, vm.importTplUrls.merchant, 2)">批量导入
+            </button>
+          </span>
         </div>
       </div>
     </div>
@@ -196,22 +264,41 @@
       </label>
 
       <div class="col-sm-8">
-        <label><input
+        <label style="margin-right: 10px"><input
           ng-model="vm.restrict.isStoreLimit"
           ng-true-value="1"
           ng-false-value="0"
           ng-disabled="vm.rangeDetail || vm.status == 1 || vm.status == 5 || vm.status == 6"
-          type="checkbox"/> 限定并选择门店</label>
+          type="checkbox"/> 正向限定门店</label>
 
-        <div ng-if="vm.restrict.isStoreLimit">
-          <button ng-disabled="vm.rangeDetail || vm.status == 1 || vm.status == 5 || vm.status == 6" class="btn btn-sm bp-btn-primary" ng-click="vm.selectStore('lg')">选择
-          </button>
-          <button class="btn btn-sm bp-btn-primary" ng-click="vm.delStore('lg')"><span
-            ng-if="!vm.rangeDetail || vm.status == 1 || vm.status == 5 || vm.status == 6">编辑</span><span ng-if="vm.rangeDetail || vm.status == 1 || vm.status == 5 || vm.status == 6">查看</span></button>
-          <button ng-disabled="vm.rangeDetail || vm.status == 1 || vm.status == 5 || vm.status == 6"
-                  class="btn btn-sm bp-btn-primary"
-                  ng-click="vm.popImportModal(vm.importUrls.store, vm.importTplUrls.store)">批量导入
-          </button>
+        <label><input
+          ng-model="vm.reverseRestrict.isStoreReverseLimit"
+          ng-true-value="1"
+          ng-false-value="0"
+          ng-disabled="vm.rangeDetail || vm.status == 1 || vm.status == 5 || vm.status == 6"
+          type="checkbox"/> 反向限定门店</label>
+
+        <div>
+          <span ng-if="vm.restrict.isStoreLimit">
+            <button ng-disabled="vm.rangeDetail || vm.status == 1 || vm.status == 5 || vm.status == 6" class="btn btn-sm bp-btn-primary" ng-click="vm.selectStore('lg', 1)">正向选择
+            </button>
+            <button class="btn btn-sm bp-btn-primary" ng-click="vm.delStore('lg', 1)"><span
+              ng-if="!vm.rangeDetail || vm.status == 1 || vm.status == 5 || vm.status == 6">正向编辑</span><span ng-if="vm.rangeDetail || vm.status == 1 || vm.status == 5 || vm.status == 6">正向查看</span></button>
+            <button ng-disabled="vm.rangeDetail || vm.status == 1 || vm.status == 5 || vm.status == 6"
+                    class="btn btn-sm bp-btn-primary"
+                    ng-click="vm.popImportModal(vm.importUrls.store, vm.importTplUrls.store, 1)">批量导入
+            </button>
+          </span>
+          <span ng-if="vm.reverseRestrict.isStoreReverseLimit">
+            <button ng-disabled="vm.rangeDetail || vm.status == 1 || vm.status == 5 || vm.status == 6" class="btn btn-sm bp-btn-primary" ng-click="vm.selectStore('lg', 2)">反向选择
+            </button>
+            <button class="btn btn-sm bp-btn-primary" ng-click="vm.delStore('lg', 2)"><span
+              ng-if="!vm.rangeDetail || vm.status == 1 || vm.status == 5 || vm.status == 6">反向编辑</span><span ng-if="vm.rangeDetail || vm.status == 1 || vm.status == 5 || vm.status == 6">正向查看</span></button>
+            <button ng-disabled="vm.rangeDetail || vm.status == 1 || vm.status == 5 || vm.status == 6"
+                    class="btn btn-sm bp-btn-primary"
+                    ng-click="vm.popImportModal(vm.importUrls.store, vm.importTplUrls.store, 2)">批量导入
+            </button>
+          </span>
         </div>
       </div>
     </div>

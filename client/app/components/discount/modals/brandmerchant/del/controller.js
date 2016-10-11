@@ -1,9 +1,11 @@
 class Controller {
-  constructor($uibModalInstance, $http, Api, $state) {
+  constructor($uibModalInstance, $http, Api, $state, selectionFlag) {
     'ngInject'
     this.$uibModalInstance = $uibModalInstance;
     this.Api = Api;
     this.$state = $state;
+    this.selectionFlag = selectionFlag;
+
     this.isDetailRange = this.$state.current.name == 'discount.detailrange' || this.$state.params.isDetailLike;
     this.btnPrimaryCon = '删除';
 
@@ -11,7 +13,7 @@ class Controller {
     this.loadPromise = $http.get('/kickoff/activity/brandMerchantLimitationList');
     this.config = {
       //拉取数据的url
-      url: '/kickoff/activity/brandMerchantLimitationList?activityId=' + activityId,
+      url: `/kickoff/activity/brandMerchantLimitationList?activityId=${activityId}&selectionFlag=${selectionFlag}`,
 
       //标识每个选项的字段
       uniqueField: 'id',
@@ -46,8 +48,10 @@ class Controller {
 
   ok() {
     let activityId = this.$state.params.id;
+    let selectionFlag = this.selectionFlag;
     this.Api.post('activity/delBrandMerchantLimitation', {
-      activityId: activityId,
+      activityId,
+      selectionFlag,
       ids: this.multiSelectModel
     }).then(r => {
       this.$uibModalInstance.close('ok');

@@ -1,9 +1,11 @@
 class PlazaController {
-  constructor($uibModalInstance, $http, Api, $state, merchantlimitationList) {
+  constructor($uibModalInstance, $http, Api, $state, merchantlimitationList, selectionFlag) {
     'ngInject'
     this.$uibModalInstance = $uibModalInstance;
     this.Api = Api;
     this.$state = $state;
+    this.selectionFlag = selectionFlag;
+
     this.isDetailRange = this.$state.current.name == 'discount.detailrange' || this.$state.params.isDetailLike;
     this.btnPrimaryCon = '删除';
 
@@ -12,7 +14,7 @@ class PlazaController {
     this.loadPromise = $http.get('/kickoff/activity/merchantlimitationList?activityId=' + activityId);
     this.config = {
       //拉取数据的url
-      url: '/kickoff/activity/merchantlimitationList?activityId=' + activityId,
+      url: `/kickoff/activity/merchantlimitationList?activityId=${activityId}&selectionFlag=${selectionFlag}`,
 
       //标识每个选项的字段
       uniqueField: 'id',
@@ -48,8 +50,10 @@ class PlazaController {
 
   ok() {
     let activityId = this.$state.params.id;
+    let selectionFlag = this.selectionFlag;
     this.Api.post('activity/delMerchantlimitation', {
-      activityId: activityId,
+      activityId,
+      selectionFlag,
       ids: this.multiSelectModel
     }).then(r => {
       this.$uibModalInstance.close('ok');

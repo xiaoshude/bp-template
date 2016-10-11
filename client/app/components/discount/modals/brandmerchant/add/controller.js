@@ -1,9 +1,11 @@
 class Controller {
-  constructor($uibModalInstance, $http, Api, $state) {
+  constructor($uibModalInstance, $http, Api, $state, selectionFlag) {
     'ngInject'
     this.$uibModalInstance = $uibModalInstance;
     this.Api = Api;
     this.$state = $state;
+    this.selectionFlag = selectionFlag;
+
     let activityId = this.$state.params.id;
 
     this.btnPrimaryCon = '添加';
@@ -62,8 +64,10 @@ class Controller {
 
   ok() {
     let activityId = this.$state.params.id;
+    let selectionFlag = this.selectionFlag;
     this.Api.post('activity/addBrandMerchantlimitation', {
-      activityId: activityId,
+      activityId,
+      selectionFlag,
       limitations: this.multiSelectModel
     }).then(r => {
       this.$uibModalInstance.close('ok');

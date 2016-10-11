@@ -1,9 +1,11 @@
 class PlazaController {
-  constructor($uibModalInstance, $http, Api, $state, plazalimitationList) {
+  constructor($uibModalInstance, $http, Api, $state, plazalimitationList, selectionFlag) {
     'ngInject'
     this.$uibModalInstance = $uibModalInstance;
     this.Api = Api;
     this.$state = $state;
+    this.selectionFlag = selectionFlag;
+
     let activityId = this.$state.params.id;
 
     this.btnPrimaryCon = '添加';
@@ -125,8 +127,10 @@ class PlazaController {
 
   ok() {
     let activityId = this.$state.params.id;
+    let selectionFlag = this.selectionFlag;
     this.Api.post('activity/addPlazalimitation', {
-      activityId: activityId,
+      activityId,
+      selectionFlag,
       limitations: this.multiSelectModel
     }).then(r => {
       this.$uibModalInstance.close('ok');
