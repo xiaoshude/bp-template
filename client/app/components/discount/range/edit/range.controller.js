@@ -333,7 +333,7 @@ class RangeController {
     });
   }
 
-  popImportModal(url, tpl, selectionFlag) {
+  popImportModal(url, tpl) {
     let data = {
       type: url,
       tpl: tpl
@@ -345,10 +345,7 @@ class RangeController {
       controllerAs: 'vm',
       size: 'md',
       resolve: {
-        data: () => data,
-        selectionFlag: () => {
-          return selectionFlag;
-        }
+        data: () => data
       }
     });
 

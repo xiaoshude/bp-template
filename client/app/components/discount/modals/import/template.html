@@ -5,6 +5,15 @@
 <div class="modal-body">
   <form name="myForm" novalidate>
     <div class="row">
+      <label class="col-xs-offset-1">
+        <select class="form-control" ng-model="vm.selectionFlag">
+          <option value="1">导入正向列表</option>
+          <option value="2">导入反向列表</option>
+        </select>
+      </label>
+    </div>
+    <hr/>
+    <div class="row">
       <div class="col-xs-3 col-xs-offset-1">
         <label class="file-input-wrapper btn btn-sm bp-btn-primary">
           <input type="file" ngf-select ng-model="vm.file" name="file" required />

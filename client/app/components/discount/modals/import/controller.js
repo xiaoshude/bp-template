@@ -1,5 +1,5 @@
 class Controller {
-  constructor($uibModalInstance, $http, Api, $state, data, Upload, selectionFlag) {
+  constructor($uibModalInstance, $http, Api, $state, data, Upload) {
     'ngInject'
     this.$uibModalInstance = $uibModalInstance;
     this.Api = Api;
@@ -7,11 +7,13 @@ class Controller {
     this.Upload = Upload;
     this.data = data;
 
+    this.selectionFlag = '1';
+
     this.url = '/kickoff/activity/multiImportScopeLimitations';
 
     this.activityId = this.$state.params.id;
     this.uploadFile = function (file) {
-      this._uploadFile(file, data.type, selectionFlag)
+      this._uploadFile(file, data.type, this.selectionFlag)
     }
   }
 
