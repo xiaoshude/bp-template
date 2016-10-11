@@ -548,12 +548,12 @@ class RangeController {
     this.form.businesstypelimitationList.forEach(item => {
       postBusinesstypelimitation.limitations.push(item);
     });
-    let postCategorylimitation = {};
+    /*let postCategorylimitation = {};
     postCategorylimitation.activityId = activityId;
     postCategorylimitation.limitations = [];
     this.form.categorylimitationList.forEach(item => {
       postCategorylimitation.limitations.push(item);
-    });
+    });*/
 
     //检验合法性
     if (!this.restrict.isBusinessTypeLimit &&
@@ -573,18 +573,18 @@ class RangeController {
       alert('类目范围不能为空');
       return;
     }
-    //类目范围
+    /*//类目范围
     if (this.restrict.isBusinessTypeLimit && !postBusinesstypelimitation.limitations.length) {
       alert('业态范围不能为空');
       return;
-    }
+    }*/
     //从新拉取选中的来进行必填性校验
-    let citylimitationListPromise = this.Api.get('activity/citylimitationList', {activityId});
-    let plazalimitationListPromise = this.Api.get('activity/plazalimitationList', {activityId});
+    let citylimitationListPromise = this.Api.get('activity/citylimitationList', {activityId, selectionFlag: 1});
+    let plazalimitationListPromise = this.Api.get('activity/plazalimitationList', {activityId, selectionFlag: 1});
     //获取商户限制列表
-    let merchantlimitationListPromise = this.Api.get('activity/merchantlimitationList', {activityId});
+    let merchantlimitationListPromise = this.Api.get('activity/merchantlimitationList', {activityId, selectionFlag: 1});
     //获取门店限制列表
-    let storelimitationListPromise = this.Api.get('activity/storelimitationList', {activityId});
+    let storelimitationListPromise = this.Api.get('activity/storelimitationList', {activityId, selectionFlag: 1});
     Promise.all([citylimitationListPromise, plazalimitationListPromise, merchantlimitationListPromise, storelimitationListPromise]).then(result => {
       console.info('result', result);
       if(!result[0].length && this.restrict.isCityLimit == 1){
@@ -619,13 +619,13 @@ class RangeController {
       if (postBusinesstypelimitation.limitations.length && this.restrict.isBusinessTypeLimit) {
         businessTypePromise = this.Api.post('activity/updateBusinesstypelimitation', postBusinesstypelimitation);
       }
-      //更新类目范围
+      /*//更新类目范围
       let categoryPromise = blankPromise;
       if (this.restrict.isCategoryLimit && postCategorylimitation.limitations.length) {
         categoryPromise = this.Api.post('activity/updateCategorylimitation', postCategorylimitation);
-      }
+      }*/
 
-      Promise.all([scopePromise, businessTypePromise, categoryPromise])
+      Promise.all([scopePromise, businessTypePromise/*, categoryPromise*/])
         .then(r => {
           this.$location.url('discount/editrule/' + activityId);
         }, e => {
