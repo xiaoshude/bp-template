@@ -8,6 +8,7 @@ class Controller {
 
     this.isDetailRange = this.$state.current.name == 'discount.detailrange' || this.$state.params.isDetailLike;
     this.btnPrimaryCon = '删除';
+    this.title = this.isDetailRange ? '查看' : '编辑';
 
     let activityId = this.$state.params.id;
     this.loadPromise = $http.get('/kickoff/activity/brandMerchantLimitationList');

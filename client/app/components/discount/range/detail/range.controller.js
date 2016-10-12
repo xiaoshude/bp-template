@@ -30,6 +30,7 @@ class RangeController {
     this.rangeDetail = true;
     this.form = {};
     this.restrict = {};
+    this.reverseRestrict = {};
     this.activityId = $state.params.id;
 
     $scope.$watch('vm.restrict', newValue => {
@@ -112,7 +113,7 @@ class RangeController {
     ]
   }
 
-  detailCity(size) {
+  detailCity(size, selectionFlag) {
     let activityId = this.activityId;
     var modalInstance = this.$uibModal.open({
       animation: true,
@@ -123,7 +124,7 @@ class RangeController {
       resolve: {
         citylimitationList: () => {
           //获取城市限制列表
-          return this.Api.get('activity/citylimitationList', {activityId}).then(responce => {
+          return this.Api.get('activity/citylimitationList', {activityId, selectionFlag}).then(responce => {
             this.citylimitationList = responce;
             this.citylimitationList.forEach(item => {
               item.categoryId = item.regionId || item.provinceId || item.cityId;
@@ -142,7 +143,7 @@ class RangeController {
     });
   }
 
-  delPlaza(size) {
+  delPlaza(size, selectionFlag) {
     var modalInstance = this.$uibModal.open({
       animation: true,
       template: plazaTemplate,
@@ -154,7 +155,10 @@ class RangeController {
           return [];
         },
         rangeDetail: () => {
-          return true;
+          return false;
+        },
+        selectionFlag: () => {
+          return selectionFlag;
         }
       }
     });
@@ -186,7 +190,7 @@ class RangeController {
     });
   }
 
-  delBrandMerchant(size) {
+  delBrandMerchant(size, selectionFlag) {
     var modalInstance = this.$uibModal.open({
       animation: true,
       template: brandmerchantTemplate,
@@ -194,27 +198,8 @@ class RangeController {
       controllerAs: 'vm',
       size: size,
       resolve: {
-      }
-    });
-
-    modalInstance.result.then(selectedItem => {
-      console.log('selectedItem', selectedItem);
-      this.selected = selectedItem;
-    }, function () {
-      //$log.info('Modal dismissed at: ' + new Date());
-    });
-  }
-
-  delMerchant(size) {
-    var modalInstance = this.$uibModal.open({
-      animation: true,
-      template: merchantTemplate,
-      controller: merchantDelController,
-      controllerAs: 'vm',
-      size: size,
-      resolve: {
-        merchantlimitationList: () => {
-          return [];
+        selectionFlag: () => {
+          return selectionFlag;
         }
       }
     });
@@ -227,7 +212,32 @@ class RangeController {
     });
   }
 
-  delStore(size) {
+  delMerchant(size, selectionFlag) {
+    var modalInstance = this.$uibModal.open({
+      animation: true,
+      template: merchantTemplate,
+      controller: merchantDelController,
+      controllerAs: 'vm',
+      size: size,
+      resolve: {
+        merchantlimitationList: () => {
+          return [];
+        },
+        selectionFlag: () => {
+          return selectionFlag;
+        }
+      }
+    });
+
+    modalInstance.result.then(selectedItem => {
+      console.log('selectedItem', selectedItem);
+      this.selected = selectedItem;
+    }, function () {
+      //$log.info('Modal dismissed at: ' + new Date());
+    });
+  }
+
+  delStore(size, selectionFlag) {
     var modalInstance = this.$uibModal.open({
       animation: true,
       template: storeTemplate,
@@ -237,6 +247,12 @@ class RangeController {
       resolve: {
         storelimitationList: () => {
           return [];
+        },
+        rangeDetail: () => {
+          return false;
+        },
+        selectionFlag: () => {
+          return selectionFlag;
         }
       }
     });
@@ -253,14 +269,26 @@ class RangeController {
     let activityId = this.activityId;
     //获取各级活动范围是否限制列表
     this.Api.get('activity/scopelimitationList', {activityId}).then(responce => {
+      this.reverseRestrict.isCityReverseLimit = responce.isCityReverseLimit;
+      delete responce.isCityReverseLimit;
+      this.reverseRestrict.isPlazaReverseLimit = responce.isPlazaReverseLimit;
+      delete responce.isPlazaReverseLimit;
+      this.reverseRestrict.isBrandMerchantReverseLimit = responce.isBrandMerchantReverseLimit;
+      delete responce.isBrandMerchantReverseLimit;
+      this.reverseRestrict.isMerchantReverseLimit = responce.isMerchantReverseLimit;
+      delete responce.isMerchantReverseLimit;
+      this.reverseRestrict.isStoreReverseLimit = responce.isStoreReverseLimit;
+      delete responce.isStoreReverseLimit;
+
       this.restrict = responce;
-      if(this.restrict.isBusinessTypeLimit == 0 &&
+      if (this.restrict.isBusinessTypeLimit == 0 &&
         this.restrict.isCategoryLimit == 0 &&
         this.restrict.isCityLimit == 0 &&
         this.restrict.isMerchantLimit == 0 &&
         this.restrict.isPlazaLimit == 0 &&
-        this.restrict.isStoreLimit == 0){
+        this.restrict.isStoreLimit == 0) {
         this.noLimit = true;
+        console.log('this.noLimit', this.noLimit);
       }
     });
     //获取业态限制列表
@@ -270,7 +298,7 @@ class RangeController {
         this.form.businesstypelimitationList.push('' + item.businessTypeId)
       });
     });
-    //获取类目限制列表
+    /*//获取类目限制列表
     this.Api.get('activity/categorylimitationList', {activityId}).then(responce => {
       this.form.categorylimitationList = [];
       responce.forEach(item => {
@@ -304,7 +332,7 @@ class RangeController {
       responce.forEach(item => {
         this.storelimitationList.push(item.storeId);
       });
-    });
+    });*/
   }
 
 }

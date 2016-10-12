@@ -8,6 +8,7 @@ class PlazaController {
 
     this.isDetailRange = this.$state.current.name == 'discount.detailrange' || this.$state.params.isDetailLike;
     this.btnPrimaryCon = '删除';
+    this.title = this.isDetailRange ? '查看' : '编辑';
 
     this.multiSelectModel = angular.copy(plazalimitationList);
     let activityId = $state.params.id;

@@ -6,6 +6,7 @@ class Controller {
     this.$state = $state;
     let activityId = this.$state.params.id;
 
+
     this.btnPrimaryCon = '添加';
 
     this.loadPromise = $http.get('/kickoff/activity/brandList');
