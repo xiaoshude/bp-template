@@ -174,7 +174,11 @@ export default class ListController {
     this.changeActivityStatus(id, 'approve');
     this.$uibModal.open({
       animation: true,
-      template: '<div class="modal-body"><p style="text-align: center;font-size: 17px;margin-top: 6px">去 <a href="/BPAPPS/whitelist/index.html#/configcenter">设置</a></p></div>',
+      template: `<div class="modal-body">
+      <p style="text-align: center">
+      请到【活动配置中心】>设置本活动的权重值，点击【去设置】可直接前往~~
+      </p>
+      <p style="text-align: center;font-size: 17px;margin-top: 6px"><a class="btn bp-btn-primary" href="/BPAPPS/whitelist/index.html#/configcenter">去设置</a></p></div>`,
       size: 'sm'
     });
   }
