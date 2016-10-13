@@ -22,7 +22,7 @@ class Controller {
       queryFields: [
         {
           type: 'text',
-          displayName: '品牌商编号',
+          displayName: '品牌商ID',
           name: 'merchantId'
         },
         {
@@ -39,7 +39,7 @@ class Controller {
       //在table中展示的字段
       tableFields: [
         {
-          displayName: '品牌商编号',
+          displayName: '品牌商ID',
           name: 'merchantId'
         },
         {
