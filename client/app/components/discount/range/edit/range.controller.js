@@ -345,7 +345,10 @@ class RangeController {
       controllerAs: 'vm',
       size: 'md',
       resolve: {
-        data: () => data
+        data: () => data,
+        restrict: () => {
+          return Object.assign({}, this.restrict, this.reverseRestrict);
+        }
       }
     });
 

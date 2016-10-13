@@ -6,9 +6,9 @@
   <form name="myForm" novalidate>
     <div class="row">
       <label class="col-xs-offset-1">
-        <select class="form-control" ng-model="vm.selectionFlag">
-          <option value="1">导入正向列表</option>
-          <option value="2">导入反向列表</option>
+        <select class="form-control"
+                ng-options="item.value as item.text for item in vm.selectionFlagOptions"
+                ng-model="vm.selectionFlag">
         </select>
       </label>
     </div>
