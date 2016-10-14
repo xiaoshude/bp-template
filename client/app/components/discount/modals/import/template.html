@@ -53,17 +53,17 @@
           <td>录入成功</td>
           <td>录入失败</td>
           <td>已存在</td>
-          <td>状态</td>
+          <!--<td>状态</td>-->
         </tr>
         <tr>
-          <td>{{vm.importResult.updatedAt | date: 'yyyy-MM-dd HH:mm:ss'}}</td>
+          <td>{{vm.importResult.updatedAt * 1000 | date: 'yyyy-MM-dd HH:mm:ss'}}</td>
           <td>{{vm.importResult.createdBy}}</td>
           <td>{{vm.importResult.total}}</td>
           <td>{{vm.importResult.validTotal}}</td>
           <td>{{vm.importResult.success}}</td>
           <td>{{vm.importResult.failed}}</td>
           <td>{{vm.importResult.existed}}</td>
-          <td>{{vm.importResult.status == 1 ? '导入中' : '已完成'}}</td>
+          <!--<td>{{vm.importResult.status == 1 ? '导入中' : '已完成'}}</td>-->
         </tr>
       </table>
 

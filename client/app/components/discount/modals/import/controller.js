@@ -62,7 +62,11 @@ class Controller {
             total: r.total,
             success: r.success,
             failed: r.failed,
-            existed: r.existed
+            existed: r.existed,
+            updatedAt: r.updatedAt,
+            createdBy: r.createdBy,
+            validTotal: r.validTotal,
+            status: r.status
           };
           if (r.status != 2) {
             setTimeout(getImportData(), 500)
