@@ -289,7 +289,7 @@
             <button ng-disabled="vm.rangeDetail || vm.status == 1 || vm.status == 5 || vm.status == 6" class="btn btn-sm bp-btn-primary" ng-click="vm.selectStore('lg', 2)">反向选择
             </button>
             <button class="btn btn-sm bp-btn-primary" ng-click="vm.delStore('lg', 2)"><span
-              ng-if="!(vm.rangeDetail || vm.status == 1 || vm.status == 5 || vm.status == 6)">反向编辑</span><span ng-if="vm.rangeDetail || vm.status == 1 || vm.status == 5 || vm.status == 6">正向查看</span></button>
+              ng-if="!(vm.rangeDetail || vm.status == 1 || vm.status == 5 || vm.status == 6)">反向编辑</span><span ng-if="vm.rangeDetail || vm.status == 1 || vm.status == 5 || vm.status == 6">反向查看</span></button>
           </span>
           <span ng-if="vm.reverseRestrict.isStoreReverseLimit || vm.restrict.isStoreLimit">
             <button ng-disabled="vm.rangeDetail || vm.status == 1 || vm.status == 5 || vm.status == 6"
