@@ -14,7 +14,7 @@
     "bootstrap": "^3.3.6",
     "bootstrap-select": "^1.9.4",
     "bp-admin-skin": "latest",
-    "bp-utils": "0.0.43",
+    "bp-utils": "latest",
     "checklist-model": "^0.9.0",
     "ffan-bp-header": "latest",
     "ffan-bp-menu": "latest",

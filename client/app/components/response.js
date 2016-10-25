@@ -88,6 +88,21 @@ let responseHandleFunc = function (response) {
     }
   }
 
+  if (/\/kickoff\/template\/importScope/.test(response.config.url)) {
+    console.info('urlInterceptor response budgetSection', response);
+    if (response.data.data) {
+      angular.forEach(response.data.data, function (item) {
+        item.startAt = moment(item.startAt * 1000).format("YYYY-MM-DD HH:mm:ss");
+        item.endAt = moment(item.endAt * 1000).format("YYYY-MM-DD HH:mm:ss");
+        item.value = item.value;
+        item.$isDisable = false;
+        if (moment().unix() > moment(item.startAt).unix()) {
+          item.$isDisable = true;
+        }
+      });
+    }
+  }
+
   if (/\/kickoff\/activity\/brandList/.test(response.config.url)) {
     response.data.items = response.data.data;
   }

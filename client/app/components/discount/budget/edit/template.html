@@ -34,26 +34,30 @@
       <tr>
         <td><span>活动预算分段控制：</span></td>
         <td>
-          <div ng-init="bands.length?'':vm.rule.type='1'">
+          <div ng-init="vm.bands.length?'':vm.rule.type='1'">
             <label>
-              <input type="radio" value="1" ng-model="vm.rule.type" ng-disabled="vm.oaInfo.status == 5 || bands.length">
+              <input type="radio" value="1" ng-model="vm.rule.type" ng-disabled="vm.oaInfo.status == 5 || vm.bands.length">
               按照元限制
             </label>
             <!--<label>
-              <input type="radio" value="0" ng-model="vm.rule.type" ng-disabled="vm.oaInfo.status == 5 || bands.length">
+              <input type="radio" value="0" ng-model="vm.rule.type" ng-disabled="vm.oaInfo.status == 5 || vm.bands.length">
               按照次数限制
             </label>-->
 
             <div>
               <button ng-click="vm.callBudgetSectionModal('lg', 'add', vm.rule.type)"
                       ng-if="vm.oaInfo.status != 6 "
-                      class="btn bp-btn-primary">添加
+                      class="btn bp-btn-primary">添加进度
+              </button>
+              <button ng-click="vm.callBudgetImportModal('md', 'add', vm.rule.type)"
+                      ng-if="vm.oaInfo.status != 6 "
+                      class="btn bp-btn-primary">导入模板
               </button>
             </div>
           </div>
-          <div ng-init="!bands ?bands=[]:''"
+          <div ng-init="!vm.bands ?vm.bands=[]:''"
                style="padding: 10px 0">
-            <div ng-repeat="band in bands"
+            <div ng-repeat="band in vm.bands"
                  style="margin: 10px 0">
               <div>
                 {{band.startAt}} —— {{band.endAt}}

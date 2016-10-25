@@ -6,10 +6,13 @@ import moment from 'moment';
 import _ from 'lodash';
 import editBudgetSection from './../modal/editbudgetsection.html'
 import editBudgetSectionCtrl from './../modal/editbudgetsection.controller.js'
+import importBudgetSection from './../modal/importbudgetsection.html'
+import importBudgetSectionCtrl from './../modal/importbudgetsection.controller.js'
 class EditbudgetController {
   constructor($scope, $state, $uibModal, $location, NgTableParams, Api) {
     "ngInject";
     this.Api = Api;
+    this.$uibModal = $uibModal;
     this.activityId = $state.params.id;
 
     let activityId = this.activityId;
@@ -52,14 +55,14 @@ class EditbudgetController {
 
     //根据活动ID获取预算分段限制列表
     Api.get('budgetSection/getlist', {activityId}).then((data)=> {
-      $scope.bands = data;
-      if (!$scope.bands.length) {
+      this.bands = data;
+      if (!this.bands.length) {
         this.rule.type = '1'
       }
     });
 
     //获取受限制的广场列表 取出该活动下全部广场 前端分页
-    this.getActivityPlazalist =() => {
+    this.getActivityPlazalist = () => {
       Api.get('budget/activityplazalist', {activityId, limit: 9999999}).then((data)=> {
         $scope.choosedPlazas = data;
         $scope.tableParams = new NgTableParams({
@@ -511,54 +514,71 @@ class EditbudgetController {
     });
 
     //预算广场列表
-    this.callBudgetSectionModal = (size, action, type, band, index) => {
-
-      let modalInstance = $uibModal.open({
-        animation: true,
-        template: editBudgetSection,
-        controller: editBudgetSectionCtrl,
-        controllerAs: 'vm',
-        size: size,
-        resolve: {
-          bandData:() => {
-            let bandData = {};
-            bandData.action = action;
-            bandData.type = type;
-            bandData.oaInfo = this.oaInfo;
-            if (action == 'add') {
-              bandData.title = '新增预算分段控制';
-              bandData.bands = this.bands;
-            } else {
-              bandData.title = '编辑预算分段控制';
-              bandData.band = band;
-              bandData.index = index;
-            }
-            return bandData;
-          }
-        }
-      });
-
-      modalInstance.result.then((data) => {
-        if (data && band) {
-          band = data;
-        }
-        if (data.index == 0 || data.index) {
-          $scope.bands[data.index] = data.band;
-        } else {
-          $scope.bands = data.bands
-        }
-
-      });
-    };
 
     this.delBudgetSection = (id) => {
       Api.post('budgetSection/del', {activityId, id: id}).then((result) => {
         Api.get('budgetSection/getlist', {activityId}).then((data)=> {
-          $scope.bands = data;
+          this.bands = data;
         });
       });
     };
     this.now = Date.now();
+  }
+
+  callBudgetSectionModal(size, action, type, band, index) {
+
+    let modalInstance = this.$uibModal.open({
+      animation: true,
+      template: editBudgetSection,
+      controller: editBudgetSectionCtrl,
+      controllerAs: 'vm',
+      size: size,
+      resolve: {
+        bandData: () => {
+          let bandData = {};
+          bandData.action = action;
+          bandData.type = type;
+          bandData.oaInfo = this.oaInfo;
+          if (action == 'add') {
+            bandData.title = '新增预算分段控制';
+            bandData.bands = this.bands;
+          } else {
+            bandData.title = '编辑预算分段控制';
+            bandData.band = band;
+            bandData.index = index;
+          }
+          return bandData;
+        }
+      }
+    });
+
+    modalInstance.result.then((data) => {
+      if (data && band) {
+        band = data;
+      }
+      if (data.index == 0 || data.index) {
+        this.bands[data.index] = data.band;
+      } else {
+        this.bands = data.bands
+      }
+
+    });
+  }
+
+  callBudgetImportModal(size, action, type, band, index) {
+
+    let modalInstance = this.$uibModal.open({
+      animation: true,
+      template: importBudgetSection,
+      controller: importBudgetSectionCtrl,
+      controllerAs: 'vm',
+      size: size,
+      resolve: {}
+    });
+
+    modalInstance.result.then((data) => {
+      this.bands = [].concat(this.bands, data)
+    });
   }
 
   $onInit() {

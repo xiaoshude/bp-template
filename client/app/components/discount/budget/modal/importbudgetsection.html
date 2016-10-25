@@ -1,0 +1,16 @@
+<div class="modal-header">
+  <h3 class="modal-title">导入模板</h3>
+</div>
+<div class="modal-body">
+  <form name="budgetSection" class="form-horizontal" novalidate>
+    <form-tpl form-config="vm.formConfig" model="vm.form"></form-tpl>
+  </form>
+</div>
+<div class="modal-footer">
+  <button class="btn bp-btn-primary"
+          type="button"
+          ng-disabled="budgetSection.$invalid"
+          ng-click="vm.ok()">导入
+  </button>
+  <button class="btn btn-warning" type="button" ng-click="vm.cancel()">关闭</button>
+</div>
