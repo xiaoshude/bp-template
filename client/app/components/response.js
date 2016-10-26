@@ -75,8 +75,11 @@ let responseHandleFunc = function (response) {
 
   if (/\/budgetSection\/getlist/.test(response.config.url)) {
     console.info('urlInterceptor response budgetSection', response);
-    if (response.data.data) {
+    let processedData = {};
+    if (response && response.data && response.data.data && angular.isArray(response.data.data)) {
       angular.forEach(response.data.data, function (item) {
+        let day = moment(item.startAt * 1000).format("YYYY-MM-DD");
+
         item.startAt = moment(item.startAt * 1000).format("YYYY-MM-DD HH:mm:ss");
         item.endAt = moment(item.endAt * 1000).format("YYYY-MM-DD HH:mm:ss");
         item.value = item.value / 100;
@@ -84,22 +87,15 @@ let responseHandleFunc = function (response) {
         if (moment().unix() > moment(item.startAt).unix()) {
           item.$isDisable = true;
         }
-      });
-    }
-  }
 
-  if (/\/kickoff\/template\/importScope/.test(response.config.url)) {
-    console.info('urlInterceptor response budgetSection', response);
-    if (response.data.data) {
-      angular.forEach(response.data.data, function (item) {
-        item.startAt = moment(item.startAt * 1000).format("YYYY-MM-DD HH:mm:ss");
-        item.endAt = moment(item.endAt * 1000).format("YYYY-MM-DD HH:mm:ss");
-        item.value = item.value;
-        item.$isDisable = false;
-        if (moment().unix() > moment(item.startAt).unix()) {
-          item.$isDisable = true;
+
+        if (!processedData[day] || !angular.isArray(processedData[day])) {
+          processedData[day] = [];
         }
+
+        processedData[day].push(item);
       });
+      response.data.data = processedData;
     }
   }
 
@@ -121,7 +117,7 @@ let responseHandleFunc = function (response) {
     console.info('urlInterceptor response merchantList', response);
     response.data.items = response.data.data;
     response.data.items.forEach(item => {
-      switch(item.type){
+      switch (item.type) {
         case 1:
           item.type = '第三方商家';
           break;
@@ -134,7 +130,7 @@ let responseHandleFunc = function (response) {
         default :
           item.type = '未知类型'
       }
-      switch(item.status){
+      switch (item.status) {
         case 1:
           item.status = '预上线';
           break;
@@ -162,9 +158,9 @@ let responseHandleFunc = function (response) {
 
   if (/\/kickoff\/activity\/plazaList/.test(response.config.url)) {
     response.data.items = response.data.data;
-    if(response.data.items && response.data.items.length){
+    if (response.data.items && response.data.items.length) {
       response.data.items.forEach(item => {
-        switch(item.plazaType){
+        switch (item.plazaType) {
           case 1:
             item.plazaType = '购物中心';
             break;
@@ -174,7 +170,7 @@ let responseHandleFunc = function (response) {
           default :
             item.plazaType = '未知类型'
         }
-        switch(item.status){
+        switch (item.status) {
           case "1":
             item.status = '未上线';
             break;
@@ -201,7 +197,7 @@ let responseHandleFunc = function (response) {
     response.data.items = response.data.data;
     response.data.items.forEach(item => {
       console.log('item.type', item.type);
-      switch(item.type){
+      switch (item.type) {
         case 1:
           item.type = '第三方门店';
           break;

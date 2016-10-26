@@ -17,6 +17,8 @@ class EditbudgetController {
 
     let activityId = this.activityId;
 
+    this.currBudgetDay = moment(new Date()).format("YYYY-MM-DD");
+
     this.rule = {};
     $scope.distributions = [];
     $scope.minus = '';
@@ -577,7 +579,12 @@ class EditbudgetController {
     });
 
     modalInstance.result.then((data) => {
-      this.bands = [].concat(this.bands, data)
+      this.Api.get('budgetSection/getlist', {activityId}).then((data)=> {
+        this.bands = data;
+        if (!this.bands.length) {
+          this.rule.type = '1'
+        }
+      });
     });
   }
 

@@ -55,22 +55,30 @@
               </button>
             </div>
           </div>
-          <div ng-init="!vm.bands ?vm.bands=[]:''"
+          <div ng-init="!vm.bands ?vm.bands={}:''"
                style="padding: 10px 0">
-            <div ng-repeat="band in vm.bands"
+
+            <div class="well">
+              <button class="btn btn-sm bp-btn-primary"
+                      ng-repeat="(key, value) in vm.bands"
+                      ng-click="vm.currBudgetDay = key">{{key}}</button>
+            </div>
+            <div ng-repeat="(key, value) in vm.bands"
                  style="margin: 10px 0">
-              <div>
-                {{band.startAt}} —— {{band.endAt}}
-                <span style="margin-left: 15px">{{band.value}}元/次</span>
-                <button class="btn bp-btn-primary"
-                        style="margin-left: 10px"
-                        ng-if="(vm.oaInfo.status != 4 || vm.oaInfo.status != 6) && !band.$isDisable"
-                        ng-click="vm.callBudgetSectionModal('lg', 'edit', vm.rule.type, band, $index)">编辑
-                </button>
-                <button class="btn bp-btn-primary"
-                        ng-click="vm.delBudgetSection(band.id)"
-                        ng-if="(vm.oaInfo.status != 4 || vm.oaInfo.status != 6) && $last && !band.$isDisable">删除
-                </button>
+              <div ng-show="key == vm.currBudgetDay">
+                <div ng-repeat="band in value">
+                  {{band.startAt}} —— {{band.endAt}}
+                  <span style="margin-left: 15px">{{band.value}}元/次</span>
+                  <button class="btn bp-btn-primary"
+                          style="margin-left: 10px"
+                          ng-if="(vm.oaInfo.status != 4 || vm.oaInfo.status != 6) && !band.$isDisable"
+                          ng-click="vm.callBudgetSectionModal('lg', 'edit', vm.rule.type, band, $index)">编辑
+                  </button>
+                  <button class="btn bp-btn-primary"
+                          ng-click="vm.delBudgetSection(band.id)"
+                          ng-if="(vm.oaInfo.status != 4 || vm.oaInfo.status != 6) && $last && !band.$isDisable">删除
+                  </button>
+                </div>
               </div>
             </div>
           </div>
