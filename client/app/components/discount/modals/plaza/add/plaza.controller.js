@@ -31,7 +31,7 @@ class PlazaController {
     this.loadPromise = $http.get('/kickoff/activity/plazaList');
     this.config = {
       //拉取数据的url
-      url: '/kickoff/activity/plazaList?activityId=' + activityId,
+      url: `/kickoff/activity/plazaList?activityId=${activityId}&selectionFlag=${selectionFlag}`,
 
       //标识每个选项的字段
       uniqueField: 'plazaId',

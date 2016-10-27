@@ -14,7 +14,7 @@ class PlazaController {
     this.loadPromise = $http.get('/kickoff/activity/merchantList');
     this.config = {
       //拉取数据的url
-      url: '/kickoff/activity/merchantList?activityId=' + activityId,
+      url: `/kickoff/activity/merchantList?activityId=${activityId}&selectionFlag=${selectionFlag}`,
 
       //标识每个选项的字段
       uniqueField: 'merchantId',

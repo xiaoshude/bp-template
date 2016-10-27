@@ -14,7 +14,7 @@ class StoreController {
     this.loadPromise = $http.get('/kickoff/activity/storeList');
     this.config = {
       //拉取数据的url
-      url: '/kickoff/activity/storeList?fields=brand&activityId=' + activityId,
+      url: `/kickoff/activity/storeList?fields=brand&activityId=${activityId}&selectionFlag=${selectionFlag}`,
 
       //标识每个选项的字段
       uniqueField: 'storeId',

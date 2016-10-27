@@ -1,5 +1,5 @@
 class Controller {
-  constructor($uibModalInstance, $http, Api, $state) {
+  constructor($uibModalInstance, $http, Api, $state, selectionFlag) {
     'ngInject'
     this.$uibModalInstance = $uibModalInstance;
     this.Api = Api;
@@ -12,7 +12,7 @@ class Controller {
     this.loadPromise = $http.get('/kickoff/activity/brandList');
     this.config = {
       //拉取数据的url
-      url: '/kickoff/activity/brandList?activityId=' + activityId,
+      url: `/kickoff/activity/brandList?activityId=${activityId}&selectionFlag=${selectionFlag}`,
 
       //标识每个选项的字段
       uniqueField: 'brandId',

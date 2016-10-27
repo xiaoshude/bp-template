@@ -13,7 +13,7 @@ class Controller {
     this.loadPromise = $http.get('/kickoff/activity/brandMerchantList');
     this.config = {
       //拉取数据的url
-      url: '/kickoff/activity/brandMerchantList?activityId=' + activityId,
+      url: `/kickoff/activity/brandMerchantList?activityId=${activityId}&selectionFlag=${selectionFlag}`,
 
       //标识每个选项的字段
       uniqueField: 'merchantId',
