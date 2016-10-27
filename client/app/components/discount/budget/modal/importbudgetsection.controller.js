@@ -46,7 +46,7 @@ class EditBudgetSectionCtrl {
   ok() {
     let activityId = this.$stateParams.id;
     this.bpApi.get('template/importScope', Object.assign({}, this.form, {activityId})).then(() => {
-      this.$uibModalInstance.close(bands);
+      this.$uibModalInstance.close();
     }, e => {
       e && e.message ? alert(e.message) : alert('出现错误');
     });

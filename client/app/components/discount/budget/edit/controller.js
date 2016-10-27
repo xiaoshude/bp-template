@@ -568,6 +568,7 @@ class EditbudgetController {
   }
 
   callBudgetImportModal(size, action, type, band, index) {
+    let activityId = this.activityId;
 
     let modalInstance = this.$uibModal.open({
       animation: true,

@@ -66,7 +66,7 @@
             <div ng-repeat="(key, value) in vm.bands"
                  style="margin: 10px 0">
               <div ng-show="key == vm.currBudgetDay">
-                <div ng-repeat="band in value">
+                <div ng-repeat="band in value" style="margin-bottom: 10px;">
                   {{band.startAt}} —— {{band.endAt}}
                   <span style="margin-left: 15px">{{band.value}}元/次</span>
                   <button class="btn bp-btn-primary"
