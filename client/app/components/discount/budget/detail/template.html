@@ -46,13 +46,33 @@
             </label>
 -->
           </div>
-          <div ng-init="!bands ?bands=[]:''"
+          <div ng-init="!bands ?bands={}:''"
                style="padding: 10px 0">
-            <div ng-repeat="band in bands"
+            <hr/>
+            <span style="margin-bottom: 5px;">波段开始日期页签:</span> <br/>
+            <button class="btn btn-sm"
+                    style="margin-right: 10px"
+                    ng-repeat="(key, value) in bands"
+                    ng-class="{'bp-btn-primary': vm.currBudgetDay == key, 'bp-btn-default': vm.currBudgetDay != key}"
+                    ng-click="vm.currBudgetDay = key">{{key}}</button>
+            <hr/>
+            <div ng-repeat="(key, value) in bands"
+                 ng-init="value.$parentLast = $last"
                  style="margin: 10px 0">
-              <div>
-                {{band.startAt}} —— {{band.endAt}}
-                <span style="margin-left: 15px">{{band.value}}元/次</span>
+              <div ng-show="key == vm.currBudgetDay">
+                <div ng-repeat="band in value" style="margin-bottom: 10px;">
+                  {{band.startAt}} —— {{band.endAt}}
+                  <span style="margin-left: 15px">{{band.value}}元/次</span>
+                  <!--<button class="btn bp-btn-primary"
+                          style="margin-left: 10px"
+                          ng-if="(vm.oaInfo.status != 4 || vm.oaInfo.status != 6) && !band.$isDisable"
+                          ng-click="vm.callBudgetSectionModal('lg', 'edit', vm.rule.type, band, $index)">编辑
+                  </button>
+                  <button class="btn bp-btn-primary"
+                          ng-click="vm.delBudgetSection(band.id)"
+                          ng-if="(vm.oaInfo.status != 4 || vm.oaInfo.status != 6) && $last && value.$parentLast && !band.$isDisable">删除
+                  </button>-->
+                </div>
               </div>
             </div>
           </div>

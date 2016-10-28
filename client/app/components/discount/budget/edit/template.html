@@ -57,13 +57,16 @@
           </div>
           <div ng-init="!vm.bands ?vm.bands={}:''"
                style="padding: 10px 0">
-
-            <div class="well">
-              <button class="btn btn-sm bp-btn-primary"
+            <hr/>
+            <span style="margin-bottom: 5px;">波段开始日期页签:</span> <br/>
+            <button class="btn btn-sm"
+                      style="margin-right: 10px"
                       ng-repeat="(key, value) in vm.bands"
+                      ng-class="{'bp-btn-primary': vm.currBudgetDay == key, 'bp-btn-default': vm.currBudgetDay != key}"
                       ng-click="vm.currBudgetDay = key">{{key}}</button>
-            </div>
+            <hr/>
             <div ng-repeat="(key, value) in vm.bands"
+                 ng-init="value.$parentLast = $last"
                  style="margin: 10px 0">
               <div ng-show="key == vm.currBudgetDay">
                 <div ng-repeat="band in value" style="margin-bottom: 10px;">
@@ -76,7 +79,7 @@
                   </button>
                   <button class="btn bp-btn-primary"
                           ng-click="vm.delBudgetSection(band.id)"
-                          ng-if="(vm.oaInfo.status != 4 || vm.oaInfo.status != 6) && $last && !band.$isDisable">删除
+                          ng-if="(vm.oaInfo.status != 4 || vm.oaInfo.status != 6) && $last && value.$parentLast && !band.$isDisable">删除
                   </button>
                 </div>
               </div>

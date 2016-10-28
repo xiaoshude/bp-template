@@ -74,7 +74,7 @@ let responseHandleFunc = function (response) {
   }
 
   if (/\/budgetSection\/getlist/.test(response.config.url)) {
-    console.info('urlInterceptor response budgetSection', response);
+    setTimeout(() => console.info('urlInterceptor response budgetSection', response), 0);
     let processedData = {};
     if (response && response.data && response.data.data && angular.isArray(response.data.data)) {
       angular.forEach(response.data.data, function (item) {
@@ -87,7 +87,6 @@ let responseHandleFunc = function (response) {
         if (moment().unix() > moment(item.startAt).unix()) {
           item.$isDisable = true;
         }
-
 
         if (!processedData[day] || !angular.isArray(processedData[day])) {
           processedData[day] = [];

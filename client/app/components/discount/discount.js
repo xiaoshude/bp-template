@@ -54,6 +54,9 @@ let discountModule = angular.module('discount', [
   .constant('$menuConstant', {
     DEBUG: process.env.DEBUG
   })
+  .constant('$env', {
+    DEBUG: process.env.DEBUG
+  })
 
 //.component('toggle',toggleComponent)
   .config(($stateProvider) => {
