@@ -61,6 +61,15 @@ class EditbudgetController {
       if (!this.bands.length) {
         this.rule.type = '1'
       }
+      let bandsKeys = [];
+      if (this.bands && angular.isObject(this.bands)) {
+        for (let k in this.bands) {
+          bandsKeys.push(k);
+        }
+      }
+      if (!bandsKeys.includes(this.currBudgetDay) && bandsKeys.length) {
+        this.currBudgetDay = bandsKeys[0];
+      }
     });
 
     //获取受限制的广场列表 取出该活动下全部广场 前端分页
