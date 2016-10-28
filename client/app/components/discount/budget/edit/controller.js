@@ -537,6 +537,7 @@ class EditbudgetController {
   }
 
   callBudgetSectionModal(size, action, type, band, index) {
+    let activityId = this.activityId;
 
     let modalInstance = this.$uibModal.open({
       animation: true,
@@ -564,14 +565,18 @@ class EditbudgetController {
     });
 
     modalInstance.result.then((data) => {
-      if (data && band) {
+      this.Api.get('budgetSection/getlist', {activityId}).then((data)=> {
+        this.bands = data;
+      });
+      /*if (data && band) {
         band = data;
       }
       if (data.index == 0 || data.index) {
+        console.log('data band', data);
         this.bands[data.index] = data.band;
       } else {
         this.bands = data.bands
-      }
+      }*/
 
     });
   }
