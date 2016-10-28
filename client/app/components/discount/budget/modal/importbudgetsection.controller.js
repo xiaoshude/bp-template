@@ -10,7 +10,7 @@ class EditBudgetSectionCtrl {
       fields: [
         {
           type: 'text',
-          displayName: '模板',
+          displayName: '模板编号',
           name: 'code',
           validateRules: {
             required: true
