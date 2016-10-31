@@ -3,6 +3,7 @@ class DetailbudgetController {
  constructor($scope,$state,$uibModal,NgTableParams,Api) {
     "ngInject";
    this.activityId = $state.params.id;
+   this.currBudgetDay = moment(new Date()).format("YYYY-MM-DD");
    this.Api = Api;
 
     $scope.activityId    = '';
@@ -39,6 +40,18 @@ class DetailbudgetController {
      //根据活动ID获取预算分段限制列表
      Api.get('budgetSection/getlist',{activityId:$state.params.id}).then((data)=>{
          $scope.bands = data;
+       if (!$scope.bands.length) {
+         $scope.rule.type = '1'
+       }
+       let bandsKeys = [];
+       if ($scope.bands && angular.isObject($scope.bands)) {
+         for (let k in $scope.bands) {
+           bandsKeys.push(k);
+         }
+       }
+       if (!bandsKeys.includes(this.currBudgetDay) && bandsKeys.length) {
+         this.currBudgetDay = bandsKeys[0];
+       }
      });
 
     //根据活动ID获取预算设置

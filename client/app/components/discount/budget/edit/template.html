@@ -45,7 +45,7 @@
             </label>-->
 
             <div>
-              <button ng-click="vm.callBudgetSectionModal('lg', 'add', vm.rule.type)"
+              <button ng-click="vm.callBudgetSectionModal('lg', 'add', vm.rule.type, null, null, true)"
                       ng-if="vm.oaInfo.status != 6 "
                       class="btn bp-btn-primary">添加进度
               </button>
@@ -78,7 +78,7 @@
                   </button>
                   <button class="btn bp-btn-primary"
                           ng-click="vm.delBudgetSection(band.id)"
-                          ng-if="(vm.oaInfo.status != 4 || vm.oaInfo.status != 6) && $last && $parent.$last && !band.$isDisable">删除
+                          ng-if="(vm.oaInfo.status != 4 || vm.oaInfo.status != 6) && $last && !band.$isDisable">删除
                   </button>
                 </div>
               </div>
