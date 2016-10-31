@@ -1,10 +1,11 @@
 class EditBudgetSectionCtrl {
-  constructor(Api, $uibModalInstance, $stateParams) {
+  constructor(Api, $uibModalInstance, $stateParams, oaInfo) {
     "ngInject";
     this.bpApi = Api;
     this.$uibModalInstance = $uibModalInstance;
     this.$stateParams = $stateParams;
     this.form = {};
+    this.oaInfo = oaInfo;
 
     this.formConfig = {
       fields: [

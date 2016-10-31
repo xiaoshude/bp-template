@@ -591,7 +591,9 @@ class EditbudgetController {
       controller: importBudgetSectionCtrl,
       controllerAs: 'vm',
       size: size,
-      resolve: {}
+      resolve: {
+        oaInfo: () => this.oaInfo
+      }
     });
 
     modalInstance.result.then((data) => {

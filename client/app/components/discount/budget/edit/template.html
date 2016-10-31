@@ -63,7 +63,7 @@
                       style="margin-right: 10px"
                       ng-repeat="(key, value) in vm.bands"
                       ng-class="{'bp-btn-primary': vm.currBudgetDay == key, 'bp-btn-default': vm.currBudgetDay != key}"
-                      ng-click="vm.currBudgetDay = key">{{key}}</button>
+                      ng-click="vm.currBudgetDay = key"><i ng-if="vm.bands[key].isMultiDay" class="fa fa-eye" aria-hidden="true"></i> {{key}}</button>
             <hr/>
             <div ng-repeat="(key, value) in vm.bands"
                  style="margin: 10px 0">
@@ -74,7 +74,7 @@
                   <button class="btn bp-btn-primary"
                           style="margin-left: 10px"
                           ng-if="(vm.oaInfo.status != 4 || vm.oaInfo.status != 6) && !band.$isDisable"
-                          ng-click="vm.callBudgetSectionModal('lg', 'edit', vm.rule.type, band, $index, $last && $parent.$last)">编辑
+                          ng-click="vm.callBudgetSectionModal('lg', 'edit', vm.rule.type, band, $index, false)">编辑
                   </button>
                   <button class="btn bp-btn-primary"
                           ng-click="vm.delBudgetSection(band.id)"

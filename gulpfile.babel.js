@@ -25,7 +25,7 @@ var chuckNorrisApiProxy = proxy(['/kickoff','/home','/System','/Public', '/Datab
   logLevel: 'debug',
   headers:{
     //Cookie:'PHPSESSID=b759f0c1b309307708bf9fac79fe2290'  PHPSESSID=8v7pjfcu417cvk9iphqdorngq7; current_node=1438; offset_p=1493
-    Cookie:'PHPSESSID=lb6a88oca3b2i34tlqc0vrq5c6'
+    Cookie:'PHPSESSID=vurbdog2n93tnvq5e56u9jbck3'
     //Cookie:'gvc=922vr2085090049607855; PHPSESSID=e6c31cf3e178efb78fc3a246b1497e8b'
   }
 });

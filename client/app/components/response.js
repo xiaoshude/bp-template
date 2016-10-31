@@ -79,6 +79,7 @@ let responseHandleFunc = function (response) {
     if (response && response.data && response.data.data && angular.isArray(response.data.data)) {
       angular.forEach(response.data.data, function (item) {
         let day = moment(item.startAt * 1000).format("YYYY-MM-DD");
+        let isMultiDay = day != moment(item.endAt * 1000).format("YYYY-MM-DD");
 
         item.startAt = moment(item.startAt * 1000).format("YYYY-MM-DD HH:mm:ss");
         item.endAt = moment(item.endAt * 1000).format("YYYY-MM-DD HH:mm:ss");
@@ -93,6 +94,9 @@ let responseHandleFunc = function (response) {
         }
 
         processedData[day].push(item);
+        if(isMultiDay){
+          processedData[day].isMultiDay = true;
+        }
       });
       response.data.data = processedData;
     }
