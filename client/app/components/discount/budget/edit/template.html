@@ -66,7 +66,6 @@
                       ng-click="vm.currBudgetDay = key">{{key}}</button>
             <hr/>
             <div ng-repeat="(key, value) in vm.bands"
-                 ng-init="value.$parentLast = $last"
                  style="margin: 10px 0">
               <div ng-show="key == vm.currBudgetDay">
                 <div ng-repeat="band in value" style="margin-bottom: 10px;">
@@ -79,7 +78,7 @@
                   </button>
                   <button class="btn bp-btn-primary"
                           ng-click="vm.delBudgetSection(band.id)"
-                          ng-if="(vm.oaInfo.status != 4 || vm.oaInfo.status != 6) && $last && value.$parentLast && !band.$isDisable">删除
+                          ng-if="(vm.oaInfo.status != 4 || vm.oaInfo.status != 6) && $last && $parent.$last && !band.$isDisable">删除
                   </button>
                 </div>
               </div>
