@@ -536,7 +536,7 @@ class EditbudgetController {
     this.now = Date.now();
   }
 
-  callBudgetSectionModal(size, action, type, band, index) {
+  callBudgetSectionModal(size, action, type, band, index, isAllEditable) {
     let activityId = this.activityId;
 
     let modalInstance = this.$uibModal.open({
@@ -560,7 +560,8 @@ class EditbudgetController {
             bandData.index = index;
           }
           return bandData;
-        }
+        },
+        isAllEditable: () =>  isAllEditable
       }
     });
 

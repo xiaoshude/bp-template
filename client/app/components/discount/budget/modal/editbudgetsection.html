@@ -5,10 +5,14 @@
   <form name="budgetSection">
     <div class="row" style="padding: 30px 10px">
       <div class="col-xs-4">
-        <bp-datepicker model="vm.band.startAt" datepicker-options="vm.startDatepickerOption"></bp-datepicker>
+        <bp-datepicker model="vm.band.startAt"
+                       disabled="!vm.isAllEditable"
+                       datepicker-options="vm.startDatepickerOption"></bp-datepicker>
       </div>
       <div class="col-xs-4">
-        <bp-datepicker model="vm.band.endAt" datepicker-options="vm.endDatepickerOption"></bp-datepicker>
+        <bp-datepicker model="vm.band.endAt"
+                       disabled="!vm.isAllEditable"
+                       datepicker-options="vm.endDatepickerOption"></bp-datepicker>
       </div>
         <span class="col-xs-4 form-inline">
             <input ng-model="vm.band.value"

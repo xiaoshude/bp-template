@@ -74,7 +74,7 @@
                   <button class="btn bp-btn-primary"
                           style="margin-left: 10px"
                           ng-if="(vm.oaInfo.status != 4 || vm.oaInfo.status != 6) && !band.$isDisable"
-                          ng-click="vm.callBudgetSectionModal('lg', 'edit', vm.rule.type, band, $index)">编辑
+                          ng-click="vm.callBudgetSectionModal('lg', 'edit', vm.rule.type, band, $index, $last && $parent.$last)">编辑
                   </button>
                   <button class="btn bp-btn-primary"
                           ng-click="vm.delBudgetSection(band.id)"

@@ -1,7 +1,7 @@
 import {budgetSectionProcess} from '../../../request.js'
 import moment from 'moment';
 class EditBudgetSectionCtrl {
-  constructor(Api, $uibModalInstance, bandData, $state, notify) {
+  constructor(Api, $uibModalInstance, bandData, $state, notify, isAllEditable) {
     "ngInject";
     let self = this;
     this.Api = Api;
@@ -9,6 +9,7 @@ class EditBudgetSectionCtrl {
     this.type = bandData.type;
     this.action = bandData.action;
     this.oaInfo = bandData.oaInfo;
+    this.isAllEditable = isAllEditable;
     this.isStartAtDisable = true;
     //this.isDisable = false;
     if (bandData.action != 'add') {
