@@ -54,7 +54,7 @@
                     style="margin-right: 10px"
                     ng-repeat="(key, value) in bands"
                     ng-class="{'bp-btn-primary': vm.currBudgetDay == key, 'bp-btn-default': vm.currBudgetDay != key}"
-                    ng-click="vm.currBudgetDay = key">{{key}}</button>
+                    ng-click="vm.currBudgetDay = key"><i ng-if="bands[key].isMultiDay" class="fa fa-eye" aria-hidden="true"></i> {{key}}</button>
             <hr/>
             <div ng-repeat="(key, value) in bands"
                  ng-init="value.$parentLast = $last"
