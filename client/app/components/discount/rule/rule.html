@@ -38,6 +38,7 @@
                   ng-model="vm.info.ruleType">
             <option value="0">满减</option>
             <option value="1">随机减</option>
+            <option value="2">折扣</option>
           </select>
         </fieldset>
         <fieldset ng-disabled="editRuleIsDisable">
@@ -161,6 +162,63 @@
             </div>
           </fieldset>
         </div>
+
+        <div ng-if="vm.info.ruleType == 2">
+          <fieldset ng-disabled="editRuleIsDisable">
+            <div>
+              订单金额限制：<label><input ng-model="vm.info.isGreaterThanLimit"
+                                   type="checkbox"/>限制</label>
+                                    <span ng-if="vm.info.isGreaterThanLimit">
+                                        <input class="form-control"
+                                               ng-model="vm.info.greaterThan"
+                                               min="0.02"
+                                               type="number"/>元
+                                    </span>
+            </div>
+          </fieldset>
+          <fieldset ng-disabled="editRuleIsDisable">
+            <div ng-if="vm.info.isGreaterThanLimit"
+                 ng-init="vm.info.discountRanges.length?'':vm.info.discountRanges=[{}]">
+              <ng-form>
+                <div ng-repeat="discountRange in vm.info.discountRanges"
+                     style="margin-bottom: 10px">
+                  满 <input class="form-control"
+
+                           ng-model="discountRange.greaterThan"
+                           ng-pattern="/^[0-9]\d*(\.\d{1,2})?$/"
+                           style="width: 130px"
+                           required
+                           type="number"/>
+                  — 折扣力度 <input class="form-control"
+                                ng-model="discountRange.discount"
+                                ng-pattern="/^[0-9]\d*(\.\d{1,2})?$/"
+                                style="width: 130px"
+                                required
+                                type="number"/>
+                  <button class="btn bp-btn-primary"
+                          ng-if="$last"
+                          type="button"
+                          ng-click="vm.info.discountRanges.push({})">添加
+                  </button>
+                  <button class="btn bp-btn-primary"
+                          type="button"
+                          ng-click="vm.info.discountRanges.pop()"
+                          ng-if="$last && !$first">删除
+                  </button>
+                </div>
+              </ng-form>
+            </div>
+
+            <div>
+              <div ng-if="!vm.info.isGreaterThanLimit">
+                <label ng-init="vm.info.discountRanges.discount ? '' : vm.info.discountRanges.discount = {}">折扣力度：<input ng-model="vm.info.discountRanges.discount" class="form-control" type="number"/> </label>
+              </div>
+              <label>最高减免：<input ng-model="vm.info.minus" class="form-control" type="number"/> 元</label>
+            </div>
+
+          </fieldset>
+        </div>
+
         <div class="discount-help-block"
              ng-show="(ruleForm.minus.$dirty) && (ruleForm.minus.$error.pattern)">
           <i class="fa fa-info-circle"></i>最多精确到小数点后两位，且必填

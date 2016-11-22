@@ -53,8 +53,10 @@ class EditruleController {
     });*/
 
     //更新规则
-    this.updateRole = function (ruleForm) {
+    this.updateRole = function () {
       var params = angular.copy(this.info);
+      console.log('params', params);
+
       params.activityId = params.id;
 
       if (parseFloat(this.info.greaterThan) < 0

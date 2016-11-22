@@ -23,7 +23,16 @@ let responseHandleFunc = function (response) {
   if (/\/activity\/rule/.test(response.config.url)) {
     console.info('urlInterceptor response pass', response);
     if (response.data.data) {
-      response.data.data.ruleType ? response.data.data.ruleType = '1' : response.data.data.ruleType = '0';
+      switch (response.data.data.ruleType) {
+        case 0:
+          response.data.data.ruleType = '0';
+          break;
+        case 1:
+          response.data.data.ruleType = '1';
+          break;
+        case 2:
+          response.data.data.ruleType = '2'
+      }
       response.data.data.greaterThan = response.data.data.greaterThan / 100;
       response.data.data.minus = response.data.data.minus / 100;
       response.data.data.minValue = response.data.data.minValue / 100;
@@ -70,6 +79,16 @@ let responseHandleFunc = function (response) {
         item.greaterThan = item.greaterThan / 100;
         item.minus = item.minus / 100;
       });
+      if (response.data.data.isGreaterThanLimit) {
+        angular.forEach(response.data.data.discountRanges, function (item) {
+          item.greaterThan = item.greaterThan / 100;
+          item.discount = item.discount / 100;
+        });
+      } else {
+        if (response.data.data.discountRanges.discount) {
+          response.data.data.discountRanges.discount /= 100;
+        }
+      }
     }
   }
 
